@@ -24,4 +24,13 @@ def load_cases(behaviour: str, key: str = "cases") -> list[dict]:
 
 
 def case_params(behaviour: str, key: str = "cases") -> list:
-    return [pytest.param(c, id=c["id"]) for c in load_cases(behaviour, key)]
+    """A case with `"known_limit": true` is a strict expected failure: it documents a limit the owner chose to fix
+    later, and turns red (XPASS) the moment a change fixes it, so the flag is removed on purpose."""
+    return [
+        pytest.param(
+            c,
+            id=c["id"],
+            marks=[pytest.mark.xfail(strict=True, reason=c["note"])] if c.get("known_limit") else [],
+        )
+        for c in load_cases(behaviour, key)
+    ]

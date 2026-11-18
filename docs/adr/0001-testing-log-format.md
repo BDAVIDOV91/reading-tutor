@@ -102,6 +102,20 @@ as correct in **variant C**; every metric is reported in both variants.
 Row deletes leave text in SQLite's free pages, so deleting one attempt runs with `PRAGMA secure_delete=ON`. A test
 with fixture files covers both (privacy review 2026-11-18).
 
+## Additions in schema v1 (step 2, owner-approved 2026-11-18)
+
+Implementation added fields and tables; none renames or drops a field above.
+
+- `texts` table: pasted texts (`text_id` = `u-` + version hash, title, text, hash). Child-adjacent content, so
+  Delete all removes it with the database.
+- `install` table: the per-install secret that keys `input_device_hash` (HMAC-SHA256 of the label, first 12 hex);
+  an unkeyed hash of "<Name>'s AirPods" can be reversed by guessing names (privacy review 2026-11-18, finding 5).
+  Delete all replaces it, which also cuts the link between old and new device hashes.
+- `attempts.original_ext`: the extension of the untouched upload (`original.<ext>`); `mime_type` holds an
+  allow-listed base type only.
+- `runs.error_kind`: the exception class name of a `failed` or `timeout` run, never its message.
+- `runs.model` carries the pinned revision (`<model>@<12-hex revision>`).
+
 ## Considered options
 
 - **Parent correction overwrites the engine mark**: rejected; every metric would be lost.

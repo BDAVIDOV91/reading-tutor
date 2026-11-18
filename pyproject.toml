@@ -4,14 +4,31 @@ version = "0.1.0"
 description = "Bulgarian reading tutor prototype: normalise, align and score a child's reading against the text."
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "fastapi>=0.164.0",
+    "python-multipart>=0.0.34",
     "rapidfuzz>=3.9",
+    "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]
 dev = [
+    "httpx>=0.28.1",
     "pytest>=8",
     "pytest-cov>=5",
 ]
+engines = [
+    "faster-whisper==1.2.1",
+    "numpy>=2.5.5",
+    "soundfile>=0.14.0",
+]
+
+[tool.uv]
+# The engines group stays separable from the core (a later native app reuses the core only), but the dev
+# machine installs it so the integration layer can run real Whisper turbo on the adult fixtures.
+default-groups = ["dev", "engines"]
+
+[project.scripts]
+reading-tutor = "reading_tutor.__main__:main"
 
 [build-system]
 requires = ["uv_build>=0.8,<0.9"]
@@ -20,9 +37,11 @@ build-backend = "uv_build"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["tests"]
-addopts = ["--strict-markers", "-ra"]
+# `slow` (real Whisper turbo through the browser) is off by default; `-m slow` overrides this -m.
+addopts = ["--strict-markers", "-ra", "-m", "not slow"]
 # Every test module declares exactly one layer (tests/unit/test_layer_guard.py enforces it).
 markers = [
+    "slow: runs real Whisper turbo end to end (minutes); excluded by default, run with -m slow",
     "unit: pure core logic, no I/O beyond reading tests/cases, no network, no browser; fast",
     "integration: several modules or real local resources together (filesystem, SQLite, a local engine on adult fixtures)",
     "e2e: the app driven in headless Chromium through playwright-cli with a fake microphone",

@@ -2,7 +2,8 @@
 
 Headless Playwright Chromium (not the system Chrome) opens a localhost page, gets a fake microphone and records
 one second with MediaRecorder. Step 2 points the same harness at the app with an adult fixture WAV
-(--use-file-for-fake-audio-capture=tests/fixtures/audio/<x>.wav; never recordings/ or data/).
+(--use-file-for-fake-audio-capture=tests/fixtures/audio-local/<x>.wav; never recordings/ or data/):
+tests/e2e/test_reading_loop.py.
 
 This is "test-verified" only. It is never "laptop-verified": that needs the real laptop microphone (ADR 0002).
 """

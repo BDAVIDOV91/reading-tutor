@@ -55,6 +55,22 @@ The specialist's own gap rules, accepted as starting values:
 12. Digit lookup 0 to 10 (cardinal, feminine/neuter, plural and personal forms) plus the `-те`/`-та`/`-мата`
     definite forms; ordinals are left out.
 13. Six or more fragments are not joined.
+14. A heard word that exactly matches one of the next 4 anchored text words (`AHEAD_WINDOW`, untuned) is an early
+    attempt at that word (a phrase repeat), never a re-attempt of the previous word, even when it is close to it
+    (`тото пие тото пие` after `пее`). Owner 2026-11-18, found by fixture f04; case
+    `phrase-repeat-near-twin-of-previous-word`. Core version 0.2.0.
+15. When a text word is followed by a stand-alone `и` (from `ѝ` or `и`), a heard token equal to that word + `и`
+    is split into the two (`брати` → `брат и`). Whisper turbo wrote `брат ѝ` as `брати` in 3 of 4 t5 adult
+    fixtures. Owner 2026-11-18; cases `glued-short-i-*`. Core version 0.3.0.
+
+## Known limits (strict expected failures)
+
+A case with `"known_limit": true` runs as `xfail(strict=True)`: it documents a limit the owner chose to fix later,
+and an accidental fix turns it red (XPASS) so the flag is removed on purpose.
+
+- `stray-far-match-after-stop` (fixture f06, owner 2026-11-18: fix in a dedicated aligner step): a stray heard
+  word after the reader stopped matches a text word far ahead, so the words between become `skipped` instead
+  of `not_attempted`.
 
 Known limits, accepted: unsure hides some real ending misreads (`лодка` → `лодки` = 0.80); `стоят` → `стоя` is
 treated as an article pair.

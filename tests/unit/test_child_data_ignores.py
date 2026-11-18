@@ -47,6 +47,22 @@ def test_fixture_exception_cannot_reinclude_secrets():
     assert all(p.index(FIXTURE_EXCEPTION) < p.index(s) for s in SECRETS)
 
 
+LOCAL_FIXTURE_AUDIO = "tests/fixtures/audio-local"  # the owner's voice: local only, never committed or synced
+
+
+def test_gitignore_excludes_local_fixture_audio_after_the_exception():
+    """Git: last match wins, so the re-exclude must come after `!tests/fixtures/**`."""
+    p = _gitignore_patterns()
+    assert f"{LOCAL_FIXTURE_AUDIO}/**" in p
+    assert p.index(f"{LOCAL_FIXTURE_AUDIO}/**") > p.index("!tests/fixtures/**")
+
+
+def test_mutagen_excludes_local_fixture_audio_after_the_exception():
+    p = _mutagen_patterns()
+    assert LOCAL_FIXTURE_AUDIO in p
+    assert p.index(LOCAL_FIXTURE_AUDIO) > p.index(FIXTURE_EXCEPTION)
+
+
 def test_every_audio_fixture_is_listed_as_adult_or_synthetic():
     """Finding 5: tests/fixtures/** is committable, so every audio file there needs a manifest line."""
     fixtures = REPO / "tests" / "fixtures"

@@ -84,3 +84,18 @@ Seen working in the laptop browser with the laptop microphone.
 
 **Device-verified**:
 Seen working on the phone with a real microphone. Never claimed from a laptop result.
+
+## Testing
+
+**Adult fixture**:
+A short recording by the owner (an adult) reading a text the way a child might, with planned mistakes, plus a
+committed sidecar that lists the expected marks. The recording itself stays on the laptop.
+_Avoid_: test recording, sample (too vague)
+
+**Reference transcript**:
+What the adult in a fixture actually said, written by hand; lets the aligner be scored with no engine.
+_Avoid_: ground truth
+
+**Child lock**:
+The server refuses a child speaker until the flag that ADR 0003 turns on is set; only adult fixtures are
+recorded before then.

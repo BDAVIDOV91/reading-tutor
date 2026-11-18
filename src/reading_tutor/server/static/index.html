@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Четене на глас</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Четене на глас</h1>
+    <p class="engine">Разпознаване: <b id="engine-name">…</b> · звукът отива: <b id="engine-dest">…</b></p>
+  </header>
+
+  <section id="setup">
+    <label for="text-select">Текст</label>
+    <select id="text-select"></select>
+    <details id="paste">
+      <summary>Постави свой текст</summary>
+      <input id="paste-title" type="text" placeholder="Заглавие" maxlength="80">
+      <textarea id="paste-text" rows="4" placeholder="Постави текста тук"></textarea>
+      <button id="paste-add" type="button">Добави текста</button>
+      <p id="paste-msg" class="msg" role="status"></p>
+    </details>
+    <label for="speaker">Кой чете</label>
+    <select id="speaker">
+      <option value="adult_fixture">Възрастен (тестов запис)</option>
+      <option value="child" disabled>Дете (изключено до ADR 0003)</option>
+    </select>
+  </section>
+
+  <article id="text-view" class="reading-text" aria-live="polite"></article>
+
+  <section id="controls">
+    <button id="start" class="big" type="button">Започни четенето</button>
+    <button id="done" class="big" type="button" hidden>Готово</button>
+    <p id="timer" class="msg" hidden></p>
+    <p id="status" class="msg" role="status"></p>
+  </section>
+
+  <section id="results" hidden>
+    <h2>Резултат</h2>
+    <p id="heard-line" class="heard-line" aria-live="polite">Докосни дума, за да видиш какво е чуто.</p>
+    <dl class="figures">
+      <div><dt>Точност</dt><dd id="fig-accuracy"></dd></div>
+      <div><dt>Верни думи в минута</dt><dd id="fig-wcpm"></dd></div>
+      <div><dt>Думи в минута</dt><dd id="fig-wpm"></dd></div>
+      <div><dt>Време</dt><dd id="fig-time"></dd></div>
+    </dl>
+    <ul class="legend">
+      <li><span class="w correct">дума</span> прочетена вярно</li>
+      <li><span class="w misread">дума</span> прочетена грешно (+ чуто)</li>
+      <li><span class="w unsure">дума?</span> не е сигурно (+ чуто)</li>
+      <li><span class="w skipped">дума</span> пропусната</li>
+      <li><span class="w not_attempted">дума</span> не е стигнато дотук</li>
+    </ul>
+    <audio id="replay" controls preload="none"></audio>
+    <button id="again" type="button">Нов запис</button>
+  </section>
+
+  <footer>
+    <button id="delete-all" class="danger" type="button">Изтрий всички записи</button>
+    <p id="delete-msg" class="msg" role="status"></p>
+  </footer>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

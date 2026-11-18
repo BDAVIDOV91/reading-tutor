@@ -1,0 +1,279 @@
+{
+ "id": "f07-t5-misreads-skip",
+ "text_id": "t5-patitsite-v-parka",
+ "kind": "misreads_skip",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse -i default)",
+ "audio": "audio-local/f07-t5-misreads-skip.wav",
+ "instructions": "Read slowly, whole words, from the start up to '...– казва Ани.', then stop. (1) Leave out the first 'в' (word 10): say 'отиват парка'. (2) Read 'бели' (word 16) as 'дели'. (3) Read 'патици' (word 17) as 'патки'. Say the wrong words confidently, without correcting yourself. Say ѝ as 'и'. About 20-25 s.",
+ "planned": [
+  "word 10 'в' skipped",
+  "word 16 'бели' read as 'дели' (one-letter neighbour)",
+  "word 17 'патици' read as 'патки'",
+  "stops after word 24 'Ани'"
+ ],
+ "reference_transcript": "днес е неделя ани и брат и иво отиват парка в езерото плуват три дели патки виж иво патиците искат хляб казва ани",
+ "expected_marks": [
+  {
+   "word": "днес",
+   "mark": "correct",
+   "heard": "днес"
+  },
+  {
+   "word": "е",
+   "mark": "correct",
+   "heard": "е"
+  },
+  {
+   "word": "неделя",
+   "mark": "correct",
+   "heard": "неделя"
+  },
+  {
+   "word": "ани",
+   "mark": "correct",
+   "heard": "ани"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "брат",
+   "mark": "correct",
+   "heard": "брат"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "иво",
+   "mark": "correct",
+   "heard": "иво"
+  },
+  {
+   "word": "отиват",
+   "mark": "correct",
+   "heard": "отиват"
+  },
+  {
+   "word": "в",
+   "mark": "skipped",
+   "heard": null
+  },
+  {
+   "word": "парка",
+   "mark": "correct",
+   "heard": "парка"
+  },
+  {
+   "word": "в",
+   "mark": "correct",
+   "heard": "в"
+  },
+  {
+   "word": "езерото",
+   "mark": "correct",
+   "heard": "езерото"
+  },
+  {
+   "word": "плуват",
+   "mark": "correct",
+   "heard": "плуват"
+  },
+  {
+   "word": "три",
+   "mark": "correct",
+   "heard": "три"
+  },
+  {
+   "word": "бели",
+   "mark": "misread",
+   "heard": "дели"
+  },
+  {
+   "word": "патици",
+   "mark": "misread",
+   "heard": "патки"
+  },
+  {
+   "word": "виж",
+   "mark": "correct",
+   "heard": "виж"
+  },
+  {
+   "word": "иво",
+   "mark": "correct",
+   "heard": "иво"
+  },
+  {
+   "word": "патиците",
+   "mark": "correct",
+   "heard": "патиците"
+  },
+  {
+   "word": "искат",
+   "mark": "correct",
+   "heard": "искат"
+  },
+  {
+   "word": "хляб",
+   "mark": "correct",
+   "heard": "хляб"
+  },
+  {
+   "word": "казва",
+   "mark": "correct",
+   "heard": "казва"
+  },
+  {
+   "word": "ани",
+   "mark": "correct",
+   "heard": "ани"
+  },
+  {
+   "word": "иво",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "вади",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "от",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "джоба",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "си",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "едно",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "хлебче",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "патиците",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "бързо",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "идват",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "при",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "децата",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "найсмелата",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "взима",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "хляба",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "от",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "ръката",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "му",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "ани",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "се",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "смее",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "после",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "двете",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "деца",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "се",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "връщат",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "у",
+   "mark": "not_attempted",
+   "heard": null
+  },
+  {
+   "word": "дома",
+   "mark": "not_attempted",
+   "heard": null
+  }
+ ]
+}

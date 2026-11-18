@@ -1,0 +1,71 @@
+{
+ "id": "f02-t1-syllables",
+ "text_id": "t1-mila-pee",
+ "kind": "syllables",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse -i default)",
+ "audio": "audio-local/f02-t1-syllables.wav",
+ "instructions": "Read every two-syllable word as separate syllables with a short gap between syllables and a longer gap between words: е|то, ма|ма, ба|ба, ми|ла, то|то, пи|е, во|да, ко|за, па|се. Read 'и' and 'пее' whole (do NOT split пее). Do not blend the syllables back into a word at the end. About 20-25 s.",
+ "planned": [
+  "every two-syllable word read syllable by syllable"
+ ],
+ "reference_transcript": "е то ма ма и ба ба ми ла пее то то пи е во да ко за па се",
+ "expected_marks": [
+  {
+   "word": "ето",
+   "mark": "correct",
+   "heard": "ето"
+  },
+  {
+   "word": "мама",
+   "mark": "correct",
+   "heard": "мама"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "баба",
+   "mark": "correct",
+   "heard": "баба"
+  },
+  {
+   "word": "мила",
+   "mark": "correct",
+   "heard": "мила"
+  },
+  {
+   "word": "пее",
+   "mark": "correct",
+   "heard": "пее"
+  },
+  {
+   "word": "тото",
+   "mark": "correct",
+   "heard": "тото"
+  },
+  {
+   "word": "пие",
+   "mark": "correct",
+   "heard": "пие"
+  },
+  {
+   "word": "вода",
+   "mark": "correct",
+   "heard": "вода"
+  },
+  {
+   "word": "коза",
+   "mark": "correct",
+   "heard": "коза"
+  },
+  {
+   "word": "пасе",
+   "mark": "correct",
+   "heard": "пасе"
+  }
+ ]
+}

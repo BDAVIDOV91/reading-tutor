@@ -25,6 +25,8 @@ tmp/
 *.aac
 *.3gp
 !tests/fixtures/**
+# ...except the owner's fixture recordings: local only (step 2 plan S2). Must stay after the exception.
+tests/fixtures/audio-local/**
 
 # Model weights
 models/

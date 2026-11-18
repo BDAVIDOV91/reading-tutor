@@ -1,0 +1,73 @@
+{
+ "id": "f03-t1-misreads-skip",
+ "text_id": "t1-mila-pee",
+ "kind": "misreads_skip",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse -i default)",
+ "audio": "audio-local/f03-t1-misreads-skip.wav",
+ "instructions": "Read slowly, whole words. (1) Leave out 'и' (word 3): go straight from 'мама' to 'баба'. (2) Read 'вода' (word 9) as 'водата'. (3) Read 'Коза' (word 10) as 'кожа'. Say the wrong words confidently, without hesitating or correcting yourself. About 10-12 s.",
+ "planned": [
+  "word 3 'и' skipped",
+  "word 9 'вода' read as 'водата'",
+  "word 10 'коза' read as 'кожа' (one-letter neighbour)"
+ ],
+ "reference_transcript": "ето мама баба мила пее тото пие водата кожа пасе",
+ "expected_marks": [
+  {
+   "word": "ето",
+   "mark": "correct",
+   "heard": "ето"
+  },
+  {
+   "word": "мама",
+   "mark": "correct",
+   "heard": "мама"
+  },
+  {
+   "word": "и",
+   "mark": "skipped",
+   "heard": null
+  },
+  {
+   "word": "баба",
+   "mark": "correct",
+   "heard": "баба"
+  },
+  {
+   "word": "мила",
+   "mark": "correct",
+   "heard": "мила"
+  },
+  {
+   "word": "пее",
+   "mark": "correct",
+   "heard": "пее"
+  },
+  {
+   "word": "тото",
+   "mark": "correct",
+   "heard": "тото"
+  },
+  {
+   "word": "пие",
+   "mark": "correct",
+   "heard": "пие"
+  },
+  {
+   "word": "вода",
+   "mark": "misread",
+   "heard": "водата"
+  },
+  {
+   "word": "коза",
+   "mark": "misread",
+   "heard": "кожа"
+  },
+  {
+   "word": "пасе",
+   "mark": "correct",
+   "heard": "пасе"
+  }
+ ]
+}

@@ -1,0 +1,274 @@
+{
+ "id": "f05-t5-clean",
+ "text_id": "t5-patitsite-v-parka",
+ "kind": "clean",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse -i default)",
+ "audio": "audio-local/f05-t5-clean.wav",
+ "instructions": "Read the whole text once at a calm, normal adult pace (it must stay under 30 s, aim for about 25 s). Do not read the dashes aloud. Say 'ѝ' as a plain 'и'. Read 'Най-смелата' as one word.",
+ "planned": [],
+ "reference_transcript": "днес е неделя ани и брат и иво отиват в парка в езерото плуват три бели патици виж иво патиците искат хляб казва ани иво вади от джоба си едно хлебче патиците бързо идват при децата най смелата взима хляба от ръката му ани се смее после двете деца се връщат у дома",
+ "expected_marks": [
+  {
+   "word": "днес",
+   "mark": "correct",
+   "heard": "днес"
+  },
+  {
+   "word": "е",
+   "mark": "correct",
+   "heard": "е"
+  },
+  {
+   "word": "неделя",
+   "mark": "correct",
+   "heard": "неделя"
+  },
+  {
+   "word": "ани",
+   "mark": "correct",
+   "heard": "ани"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "брат",
+   "mark": "correct",
+   "heard": "брат"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "иво",
+   "mark": "correct",
+   "heard": "иво"
+  },
+  {
+   "word": "отиват",
+   "mark": "correct",
+   "heard": "отиват"
+  },
+  {
+   "word": "в",
+   "mark": "correct",
+   "heard": "в"
+  },
+  {
+   "word": "парка",
+   "mark": "correct",
+   "heard": "парка"
+  },
+  {
+   "word": "в",
+   "mark": "correct",
+   "heard": "в"
+  },
+  {
+   "word": "езерото",
+   "mark": "correct",
+   "heard": "езерото"
+  },
+  {
+   "word": "плуват",
+   "mark": "correct",
+   "heard": "плуват"
+  },
+  {
+   "word": "три",
+   "mark": "correct",
+   "heard": "три"
+  },
+  {
+   "word": "бели",
+   "mark": "correct",
+   "heard": "бели"
+  },
+  {
+   "word": "патици",
+   "mark": "correct",
+   "heard": "патици"
+  },
+  {
+   "word": "виж",
+   "mark": "correct",
+   "heard": "виж"
+  },
+  {
+   "word": "иво",
+   "mark": "correct",
+   "heard": "иво"
+  },
+  {
+   "word": "патиците",
+   "mark": "correct",
+   "heard": "патиците"
+  },
+  {
+   "word": "искат",
+   "mark": "correct",
+   "heard": "искат"
+  },
+  {
+   "word": "хляб",
+   "mark": "correct",
+   "heard": "хляб"
+  },
+  {
+   "word": "казва",
+   "mark": "correct",
+   "heard": "казва"
+  },
+  {
+   "word": "ани",
+   "mark": "correct",
+   "heard": "ани"
+  },
+  {
+   "word": "иво",
+   "mark": "correct",
+   "heard": "иво"
+  },
+  {
+   "word": "вади",
+   "mark": "correct",
+   "heard": "вади"
+  },
+  {
+   "word": "от",
+   "mark": "correct",
+   "heard": "от"
+  },
+  {
+   "word": "джоба",
+   "mark": "correct",
+   "heard": "джоба"
+  },
+  {
+   "word": "си",
+   "mark": "correct",
+   "heard": "си"
+  },
+  {
+   "word": "едно",
+   "mark": "correct",
+   "heard": "едно"
+  },
+  {
+   "word": "хлебче",
+   "mark": "correct",
+   "heard": "хлебче"
+  },
+  {
+   "word": "патиците",
+   "mark": "correct",
+   "heard": "патиците"
+  },
+  {
+   "word": "бързо",
+   "mark": "correct",
+   "heard": "бързо"
+  },
+  {
+   "word": "идват",
+   "mark": "correct",
+   "heard": "идват"
+  },
+  {
+   "word": "при",
+   "mark": "correct",
+   "heard": "при"
+  },
+  {
+   "word": "децата",
+   "mark": "correct",
+   "heard": "децата"
+  },
+  {
+   "word": "найсмелата",
+   "mark": "correct",
+   "heard": "найсмелата"
+  },
+  {
+   "word": "взима",
+   "mark": "correct",
+   "heard": "взима"
+  },
+  {
+   "word": "хляба",
+   "mark": "correct",
+   "heard": "хляба"
+  },
+  {
+   "word": "от",
+   "mark": "correct",
+   "heard": "от"
+  },
+  {
+   "word": "ръката",
+   "mark": "correct",
+   "heard": "ръката"
+  },
+  {
+   "word": "му",
+   "mark": "correct",
+   "heard": "му"
+  },
+  {
+   "word": "ани",
+   "mark": "correct",
+   "heard": "ани"
+  },
+  {
+   "word": "се",
+   "mark": "correct",
+   "heard": "се"
+  },
+  {
+   "word": "смее",
+   "mark": "correct",
+   "heard": "смее"
+  },
+  {
+   "word": "после",
+   "mark": "correct",
+   "heard": "после"
+  },
+  {
+   "word": "двете",
+   "mark": "correct",
+   "heard": "двете"
+  },
+  {
+   "word": "деца",
+   "mark": "correct",
+   "heard": "деца"
+  },
+  {
+   "word": "се",
+   "mark": "correct",
+   "heard": "се"
+  },
+  {
+   "word": "връщат",
+   "mark": "correct",
+   "heard": "връщат"
+  },
+  {
+   "word": "у",
+   "mark": "correct",
+   "heard": "у"
+  },
+  {
+   "word": "дома",
+   "mark": "correct",
+   "heard": "дома"
+  }
+ ]
+}

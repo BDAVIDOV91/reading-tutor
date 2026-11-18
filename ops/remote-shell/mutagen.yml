@@ -37,6 +37,7 @@ sync:
         - '*.aac'
         - '*.3gp'
         - '!tests/fixtures/**' # adult-recorded or synthetic fixtures only, already committed
+        - 'tests/fixtures/audio-local' # the owner's fixture recordings stay on M1 (step 2 plan S2); after the exception
 
         # --- secrets and key material ---
         - '.env*'

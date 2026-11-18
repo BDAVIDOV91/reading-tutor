@@ -1,0 +1,41 @@
+:root {
+  --bg: #fbfaf7;
+  --fg: #1d1d1b;
+  --muted: #6b6a66;
+  --correct: #1f7a3a;
+  --correct-bg: #e3f3e7;
+  --misread: #b45309;
+  --misread-bg: #fdecd8;
+  --skipped: #b91c1c;
+  --skipped-bg: #fbe0e0;
+  --grey: #8a8984;
+  --accent: #2856c7;
+  --danger: #b91c1c;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 18px/1.5 system-ui, sans-serif; }
+main { max-width: 52rem; margin: 0 auto; padding: 1rem 1rem 3rem; }
+h1 { margin: .2rem 0; font-size: 1.6rem; }
+.engine { color: var(--muted); font-size: .9rem; margin: 0 0 1rem; }
+label { display: block; font-weight: 600; margin: .8rem 0 .2rem; }
+select, input, textarea { width: 100%; font: inherit; padding: .4rem; }
+details { margin: .6rem 0; }
+.reading-text { font-size: 1.8rem; line-height: 2.1; margin: 1.5rem 0; white-space: pre-line; }
+button { font: inherit; padding: .5rem 1rem; border-radius: .5rem; border: 1px solid #c9c7c0; background: #fff; cursor: pointer; }
+button.big { font-size: 1.5rem; padding: 1rem 2rem; background: var(--accent); color: #fff; border: 0; min-width: 16rem; }
+button.danger { color: var(--danger); border-color: var(--danger); }
+.msg { color: var(--muted); }
+.w { border-radius: .3rem; padding: 0 .15rem; cursor: pointer; }
+.w.correct { color: var(--correct); background: var(--correct-bg); }
+.w.misread { color: var(--misread); background: var(--misread-bg); }
+.w.unsure { color: var(--misread); border: 2px dashed var(--misread); }
+.w.skipped { color: var(--skipped); background: var(--skipped-bg); text-decoration: line-through; }
+.w.not_attempted { color: var(--grey); }
+.heard-line { min-height: 1.5em; font-size: 1.1rem; }
+.figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .6rem; }
+.figures div { background: #fff; border: 1px solid #e5e3dc; border-radius: .5rem; padding: .5rem .8rem; }
+.figures dt { color: var(--muted); font-size: .85rem; }
+.figures dd { margin: 0; font-size: 1.4rem; font-weight: 600; }
+.legend { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font-size: .9rem; }
+audio { display: block; width: 100%; margin: 1rem 0; }
+footer { margin-top: 3rem; border-top: 1px solid #e5e3dc; padding-top: 1rem; }

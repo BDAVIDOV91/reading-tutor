@@ -1,0 +1,73 @@
+{
+ "id": "f04-t1-repeats-selfcorr",
+ "text_id": "t1-mila-pee",
+ "kind": "repeats_selfcorrection",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse -i default)",
+ "audio": "audio-local/f04-t1-repeats-selfcorr.wav",
+ "instructions": "Read slowly, whole words. (1) Say 'баба' twice. (2) After 'Тото пие', go back and say 'Тото пие' again, then go on. (3) Read 'Коза' first as 'кожа', pause about half a second, then say 'коза' correctly. About 15 s.",
+ "planned": [
+  "'баба' repeated",
+  "phrase 'тото пие' repeated",
+  "'коза' first read 'кожа', then self-corrected"
+ ],
+ "reference_transcript": "ето мама и баба баба мила пее тото пие тото пие вода кожа коза пасе",
+ "expected_marks": [
+  {
+   "word": "ето",
+   "mark": "correct",
+   "heard": "ето"
+  },
+  {
+   "word": "мама",
+   "mark": "correct",
+   "heard": "мама"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "баба",
+   "mark": "correct",
+   "heard": "баба"
+  },
+  {
+   "word": "мила",
+   "mark": "correct",
+   "heard": "мила"
+  },
+  {
+   "word": "пее",
+   "mark": "correct",
+   "heard": "пее"
+  },
+  {
+   "word": "тото",
+   "mark": "correct",
+   "heard": "тото"
+  },
+  {
+   "word": "пие",
+   "mark": "correct",
+   "heard": "пие"
+  },
+  {
+   "word": "вода",
+   "mark": "correct",
+   "heard": "вода"
+  },
+  {
+   "word": "коза",
+   "mark": "correct",
+   "heard": "коза"
+  },
+  {
+   "word": "пасе",
+   "mark": "correct",
+   "heard": "пасе"
+  }
+ ]
+}

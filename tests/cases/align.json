@@ -132,6 +132,19 @@
      "note": "Stress marks in the transcript are ignored."},
     {"id": "empty-heard", "text": "Слънцето грее.", "heard": "",
      "expected": [{"word": "слънцето", "mark": "not_attempted", "heard": null}, {"word": "грее", "mark": "not_attempted", "heard": null}],
-     "note": "Empty transcript: every word is not_attempted."}
+     "note": "Empty transcript: every word is not_attempted."},
+    {"id": "phrase-repeat-near-twin-of-previous-word", "text": "Мила пее. Тото пие вода.", "heard": "мила пее тото пие тото пие вода",
+     "expected": [{"word": "мила", "mark": "correct", "heard": "мила"}, {"word": "пее", "mark": "correct", "heard": "пее"}, {"word": "тото", "mark": "correct", "heard": "тото"}, {"word": "пие", "mark": "correct", "heard": "пие"}, {"word": "вода", "mark": "correct", "heard": "вода"}],
+     "note": "Owner 2026-11-18 (fixture f04): a heard word that exactly matches one of the next few text words is an early attempt at that word, not a re-attempt of the previous word, even when it is close to the previous word (пие / пее)."},
+    {"id": "glued-short-i-after-word", "text": "Ани и брат ѝ Иво.", "heard": "ани и брати иво",
+     "expected": [{"word": "ани", "mark": "correct", "heard": "ани"}, {"word": "и", "mark": "correct", "heard": "и"}, {"word": "брат", "mark": "correct", "heard": "брат"}, {"word": "и", "mark": "correct", "heard": "и"}, {"word": "иво", "mark": "correct", "heard": "иво"}],
+     "note": "Owner 2026-11-18 (fixtures f06-f08): Whisper writes 'брат ѝ' as one word 'брати'. When the next text word is a stand-alone и (from ѝ or и), a heard word equal to the text word + и is split into the two."},
+    {"id": "glued-short-i-only-when-next-word-is-i", "text": "Брат Иво.", "heard": "брати иво",
+     "expected": [{"word": "брат", "mark": "misread", "heard": "брати"}, {"word": "иво", "mark": "correct", "heard": "иво"}],
+     "note": "No split when the next text word is not и: 'брати' for 'брат' stays a misread."},
+    {"id": "glued-short-i-real-misread-kept", "text": "Мама ѝ пее.", "heard": "мами пее",
+     "expected": [{"word": "мама", "mark": "misread", "heard": "мами"}, {"word": "и", "mark": "skipped", "heard": null}, {"word": "пее", "mark": "correct", "heard": "пее"}],
+     "note": "Split only on an exact text word + и: 'мами' is not 'мама' + 'и', so it stays a misread."},
+    {"id": "stray-far-match-after-stop", "known_limit": true, "text": "Днес е неделя. В езерото плуват три бели патици. Виж, Иво, патиците искат хляб! Иво вади от джоба си едно хлебче.", "heard": "днес е неделя в езерото плуват три бели патици си", "expected": [{"word": "днес", "mark": "correct", "heard": "днес"}, {"word": "е", "mark": "correct", "heard": "е"}, {"word": "неделя", "mark": "correct", "heard": "неделя"}, {"word": "в", "mark": "correct", "heard": "в"}, {"word": "езерото", "mark": "correct", "heard": "езерото"}, {"word": "плуват", "mark": "correct", "heard": "плуват"}, {"word": "три", "mark": "correct", "heard": "три"}, {"word": "бели", "mark": "correct", "heard": "бели"}, {"word": "патици", "mark": "correct", "heard": "патици"}, {"word": "виж", "mark": "not_attempted", "heard": null}, {"word": "иво", "mark": "not_attempted", "heard": null}, {"word": "патиците", "mark": "not_attempted", "heard": null}, {"word": "искат", "mark": "not_attempted", "heard": null}, {"word": "хляб", "mark": "not_attempted", "heard": null}, {"word": "иво", "mark": "not_attempted", "heard": null}, {"word": "вади", "mark": "not_attempted", "heard": null}, {"word": "от", "mark": "not_attempted", "heard": null}, {"word": "джоба", "mark": "not_attempted", "heard": null}, {"word": "си", "mark": "not_attempted", "heard": null}, {"word": "едно", "mark": "not_attempted", "heard": null}, {"word": "хлебче", "mark": "not_attempted", "heard": null}], "note": "KNOWN LIMIT (owner 2026-11-18, fixture f06): a stray heard word after the reader stopped exactly matches a text word 10 words ahead, so everything between becomes skipped instead of not_attempted. Expected failure until the dedicated aligner step."}
   ]
 }

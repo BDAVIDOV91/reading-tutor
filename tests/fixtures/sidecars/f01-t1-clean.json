@@ -1,0 +1,69 @@
+{
+ "id": "f01-t1-clean",
+ "text_id": "t1-mila-pee",
+ "kind": "clean",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse -i default)",
+ "audio": "audio-local/f01-t1-clean.wav",
+ "instructions": "Read the whole text once, slowly and clearly, the way a careful 6-year-old reads whole words. Short pause at each full stop. About 10-12 s.",
+ "planned": [],
+ "reference_transcript": "ето мама и баба мила пее тото пие вода коза пасе",
+ "expected_marks": [
+  {
+   "word": "ето",
+   "mark": "correct",
+   "heard": "ето"
+  },
+  {
+   "word": "мама",
+   "mark": "correct",
+   "heard": "мама"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "баба",
+   "mark": "correct",
+   "heard": "баба"
+  },
+  {
+   "word": "мила",
+   "mark": "correct",
+   "heard": "мила"
+  },
+  {
+   "word": "пее",
+   "mark": "correct",
+   "heard": "пее"
+  },
+  {
+   "word": "тото",
+   "mark": "correct",
+   "heard": "тото"
+  },
+  {
+   "word": "пие",
+   "mark": "correct",
+   "heard": "пие"
+  },
+  {
+   "word": "вода",
+   "mark": "correct",
+   "heard": "вода"
+  },
+  {
+   "word": "коза",
+   "mark": "correct",
+   "heard": "коза"
+  },
+  {
+   "word": "пасе",
+   "mark": "correct",
+   "heard": "пасе"
+  }
+ ]
+}

@@ -25,6 +25,8 @@ from reading_tutor.core.similarity import similarity
 MAX_JOIN = 5  # syllable fragments joined into one word (owner 2026-11-18)
 REATTEMPT_MIN = 0.5  # untuned: below this a following heard word is an insertion, not a re-attempt
 REPEAT_WINDOW = 12  # how far back an exact repeat may jump
+_MIN_GLUED_STEM = 2  # rule 15: "брати" -> "брат" + "и"; a one-letter stem is never split
+AHEAD_WINDOW = 4  # untuned: an exact match to one of this many upcoming anchored words is an early attempt at it
 
 _SKIP = 1.0
 _INSERT = 0.6
@@ -116,7 +118,12 @@ def _gap(
                 nxt = next_word if k == k_n else None
                 sim_prev = _sim(t[prev], tok) if prev is not None else -1.0
                 sim_next = _sim(t[nxt], tok) if nxt is not None else -1.0
-                if max(sim_prev, sim_next) >= REATTEMPT_MIN:
+                ahead = next_word is not None and any(
+                    _eq(t[w], tok) for w in range(next_word, min(len(t), next_word + AHEAD_WINDOW))
+                )
+                if ahead:  # an exact early attempt at an upcoming word (a phrase repeat): never a re-attempt
+                    options.append((_REATTEMPT + cost[k][x + 1], 1, ("again", None)))
+                elif max(sim_prev, sim_next) >= REATTEMPT_MIN:
                     target = prev if sim_prev >= sim_next else None  # None: an earlier attempt at the next anchor
                     options.append((_REATTEMPT + cost[k][x + 1], 1, ("again", target)))
                 g = words[k] if k < k_n else (next_word if next_word is not None else len(t))
@@ -149,10 +156,23 @@ def _gap(
     return events
 
 
+def _split_glued_i(t: list[str], h: list[str]) -> list[str]:
+    """Rule 15 (owner 2026-11-18, fixtures f06-f08): an engine writes 'брат ѝ' as 'брати'. When a text word is
+    followed by a stand-alone и, a heard token equal to that word + и is split back into the two."""
+    stems = {t[i] for i in range(len(t) - 1) if t[i + 1] == "и" and len(t[i]) >= _MIN_GLUED_STEM}
+    out: list[str] = []
+    for tok in h:
+        if tok.endswith("и") and tok[:-1] in stems:
+            out += [tok[:-1], "и"]
+        else:
+            out.append(tok)
+    return out
+
+
 def align(text: str, heard: str) -> list[WordMark]:
     text_tokens = tokenise(text, side="text")
     t = [tok.norm for tok in text_tokens]
-    h = [tok.norm for tok in tokenise(heard, side="heard")]
+    h = _split_glued_i(t, [tok.norm for tok in tokenise(heard, side="heard")])
 
     anchors = _anchors(t, h)
     events = [_Event(j0, i, "".join(h[j0:j1])) for i, j0, j1 in anchors]

@@ -24,19 +24,33 @@ are the default for every alignment and scoring test.
 
 ## 2. Audio fixtures (engines, end to end)
 
-Recorded by an adult (the owner), reading a sample text the way a child might. Stored under
-`tests/fixtures/audio/`, the one place audio may be committed.
+Recorded by an adult (the owner), reading a sample text the way a child might. The WAVs live in
+`tests/fixtures/audio-local/<id>.wav`: **local only**, gitignored and excluded from the M2 sync (step 2 plan S2),
+because they are still a real person's voice. Record with
+`ffmpeg -f pulse -i default -ac 1 -ar 16000 -t 30 tests/fixtures/audio-local/<id>.wav`. Every clip has a line in
+`tests/fixtures/FIXTURES.md`; a test that needs a WAV fails when it is missing.
 
-Each recording has a sidecar `<name>.json`: text id, speaker `adult`, device, what was done on purpose
-(for example "word 3 read as 'котка' instead of 'кошка'; word 5 repeated; word 7 skipped"), and the expected
-per-word marking. The deliberate mistakes are what make a fixture useful: they show whether an engine reports
-a misreading or silently "corrects" it.
+Each recording has a committed sidecar `tests/fixtures/sidecars/<id>.json`:
+
+| Field | Content |
+|---|---|
+| `id`, `text_id`, `kind` | `f03-t1-misreads-skip`; a built-in text id (`texts/`); `clean`, `syllables`, `misreads_skip`, `repeats_selfcorrection` |
+| `speaker`, `recorded_by`, `device` | always `adult`; `owner`; the microphone |
+| `audio` | `audio-local/<id>.wav` |
+| `instructions`, `planned` | what to read and how; the deliberate mistakes in words |
+| `reference_transcript` | what the adult actually says, syllables as separate words |
+| `expected_marks` | `[{word, mark, heard}]`, the same shape as `tests/cases/align.json` |
+
+`tests/unit/test_fixture_sidecars.py` checks that `expected_marks == align(text, reference_transcript)`, so the
+aligner is scored on hand-written transcripts with no engine. The deliberate mistakes are what make a fixture
+useful: they show whether an engine reports a misreading or silently "corrects" it. The e2e fake engine returns a
+sidecar's `reference_transcript`.
 
 Minimum set per sample text level: one clean read, one slow syllable-by-syllable read, one with two
 substitutions and one skip, one with repeats and a self-correction, one with background noise.
 
-Before `git add` of an audio fixture, confirm with the owner through `AskUserQuestion` that it is an adult
-voice with no child audible in the background. Keep files short (under 30 seconds) and mono.
+Audio fixtures are never `git add`ed. Before a clip is used, the owner confirms it is an adult voice with no child
+audible in the background. Keep files short (under 30 seconds) and mono.
 
 ## Limits
 
