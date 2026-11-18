@@ -19,7 +19,10 @@ and scores it. The prototype answers one question: can speech recognition follow
    logging or the server.
 
 Repo skills: `add-stt-engine`, `engine-eval`, `reading-fixtures`. Repo agents besides `challenger`:
-`bulgarian-reading-specialist` (texts, normalisation, test cases), `engine-evaluator` (comparison method, numbers).
+`bulgarian-reading-specialist` (texts, normalisation, test cases), `engine-evaluator` (comparison method, numbers),
+and three researchers (`stt-researcher`, `privacy-law-researcher`, `browser-audio-researcher`).
+Never delegate to `general-purpose`: if no named agent fits, create one with a name and purpose first
+(`docs/SKILLS.md`).
 
 **Per fix:** write a test that fails on the old code (RED), fix, see it pass (GREEN), run the full suite. The test
 stays in the suite forever. No fix ships without its own regression test.

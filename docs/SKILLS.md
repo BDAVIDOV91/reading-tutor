@@ -36,8 +36,15 @@ is also added.
 | `privacy-reviewer` | AUTO | Before the checkpoint, when a diff touches audio, storage, STT clients, the log, export, logging or the server. | Read-only review of the diff. |
 | `bulgarian-reading-specialist` | AUTO | Sample texts, normalisation rules, child misreading patterns, alignment test cases. | Read-only; returns text and tables. Invented examples only. |
 | `engine-evaluator` | AUTO | Designing or auditing the engine comparison; interpreting aggregate numbers. | Read-only; aggregates only. |
+| `stt-researcher` | AUTO | Web research on engines, models, children's speech accuracy, alignment, streaming, prior art. | Read-only; sourced findings. |
+| `privacy-law-researcher` | AUTO | Web research on GDPR and Bulgarian child-data rules, provider data terms, AI Act, copyright of texts. | Read-only; sourced findings, not legal advice. |
+| `browser-audio-researcher` | AUTO | Web research on mobile microphone capture, local HTTPS without a public URL, audio formats. | Read-only; sourced findings. |
 
 No agent reads `recordings/` or `data/`. One agent per question; at most two running at once.
+
+**No anonymous agents (owner rule 2026-11-18).** Work is never delegated to `general-purpose` or another
+catch-all type. If no agent in this table fits, write a new `.claude/agents/<name>.md` with a name and a stated
+purpose first, add its row here, then use it, so it is there the second time.
 
 ## Plugins and global skills
 
