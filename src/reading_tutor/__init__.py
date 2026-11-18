@@ -1,0 +1,1 @@
+"""Bulgarian reading tutor prototype."""

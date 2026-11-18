@@ -18,7 +18,8 @@ and scores it. The prototype answers one question: can speech recognition follow
 5. **Before the checkpoint**, run the `privacy-reviewer` agent when the diff touches audio, storage, STT clients,
    logging or the server.
 
-Repo skills: `add-stt-engine`, `engine-eval`, `reading-fixtures`. Repo agents besides `challenger`:
+Repo skills: `add-stt-engine`, `engine-eval`, `reading-fixtures`, `run-tests` (test layers and the gate),
+`playwright-cli` (headless browser). Repo agents besides `challenger`:
 `bulgarian-reading-specialist` (texts, normalisation, test cases), `engine-evaluator` (comparison method, numbers),
 and three researchers (`stt-researcher`, `privacy-law-researcher`, `browser-audio-researcher`).
 Never delegate to `general-purpose`: if no named agent fits, create one with a name and purpose first

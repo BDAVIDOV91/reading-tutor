@@ -1,0 +1,37 @@
+[project]
+name = "reading-tutor"
+version = "0.1.0"
+description = "Bulgarian reading tutor prototype: normalise, align and score a child's reading against the text."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "rapidfuzz>=3.9",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+]
+
+[build-system]
+requires = ["uv_build>=0.8,<0.9"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+addopts = ["--strict-markers", "-ra"]
+# Every test module declares exactly one layer (tests/unit/test_layer_guard.py enforces it).
+markers = [
+    "unit: pure core logic, no I/O beyond reading tests/cases, no network, no browser; fast",
+    "integration: several modules or real local resources together (filesystem, SQLite, a local engine on adult fixtures)",
+    "e2e: the app driven in headless Chromium through playwright-cli with a fake microphone",
+]
+
+[tool.coverage.run]
+source = ["reading_tutor"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false

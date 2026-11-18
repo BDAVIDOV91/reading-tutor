@@ -1,0 +1,26 @@
+{
+  "behaviour": "judge",
+  "note": "Marks one final attempt at one text word. Both inputs are already normalised. Rules: tests/cases/README.md.",
+  "cases": [
+    {"id": "exact", "expected": "котка", "heard": "котка", "mark": "correct", "note": "Exact match."},
+    {"id": "unsure-at-threshold", "expected": "котка", "heard": "кошка", "mark": "unsure", "note": "5 letters, similarity exactly 0.80: threshold is inclusive."},
+    {"id": "unsure-six-letters", "expected": "голяма", "heard": "голема", "mark": "unsure", "note": "6 letters, similarity 0.83."},
+    {"id": "misread-below-threshold", "expected": "кучето", "heard": "куче", "mark": "misread", "note": "Similarity 0.67."},
+    {"id": "short-word-exact-only", "expected": "коза", "heard": "роза", "mark": "misread", "note": "4 letters: exact only."},
+    {"id": "short-word-longer-heard", "expected": "баба", "heard": "бабка", "mark": "misread", "note": "Similarity would be 0.80, but the expected word has 4 letters."},
+    {"id": "three-letters", "expected": "дом", "heard": "дим", "mark": "misread", "note": "3 letters: exact only."},
+    {"id": "different-word", "expected": "рисува", "heard": "пише", "mark": "misread", "note": "Unrelated word."},
+    {"id": "digit-in-lookup", "expected": "две", "heard": "2", "mark": "correct", "note": "Digit lookup: 2 covers два, две, двама."},
+    {"id": "digit-masculine-personal", "expected": "трима", "heard": "3", "mark": "correct", "note": "Digit lookup: 3 covers три, трима."},
+    {"id": "digit-not-in-lookup", "expected": "три", "heard": "4", "mark": "misread", "note": "4 does not cover три."},
+    {"id": "digit-ten", "expected": "десет", "heard": "10", "mark": "correct", "note": "Two-digit lookup key."},
+    {"id": "digit-te-form", "expected": "двете", "heard": "2те", "mark": "correct", "note": "Digit + -те form (owner 2026-11-18)."},
+    {"id": "digit-ta-form", "expected": "двата", "heard": "2та", "mark": "correct", "note": "Digit + -та form."},
+    {"id": "digit-te-wrong-word", "expected": "трите", "heard": "2те", "mark": "misread", "note": "2те does not cover трите."},
+    {"id": "article-full-heard-short", "expected": "градът", "heard": "града", "mark": "correct", "note": "Full and short article sound the same (owner 2026-11-18)."},
+    {"id": "article-short-heard-full", "expected": "града", "heard": "градът", "mark": "correct", "note": "Equivalence is symmetric."},
+    {"id": "article-ya", "expected": "конят", "heard": "коня", "mark": "correct", "note": "-ят / -я equivalence."},
+    {"id": "article-short-stem-excluded", "expected": "път", "heard": "па", "mark": "misread", "note": "Stem shorter than 3 letters: път is not an article form."},
+    {"id": "article-wrong-stem", "expected": "градът", "heard": "брада", "mark": "misread", "note": "Equivalence needs the same stem."}
+  ]
+}

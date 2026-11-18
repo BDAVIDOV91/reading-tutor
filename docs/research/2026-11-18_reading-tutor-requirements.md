@@ -225,3 +225,29 @@ No decision was rejected and no privacy breach found; the agreed findings and wh
 - **Medium:** Whisper hides misreadings (consistent across three papers, but Dutch, Basque and English); household exemption fit.
 - **Low / unverified:** every CPU speed figure; cloud free-tier terms and card requirements; the exact Gao 2024 precision and recall; Chrome Android trust of a user-installed CA; Parakeet on CPU; Bulgarian Web Speech support; AI Act classification; author death years (Wikidata).
 - **Unknown until measured:** everything about Bulgarian children aged 6 to 8.
+
+## Go / no-go proposal (engine-evaluator, 2026-11-18; input to ADR 0003, not a decision)
+
+The owner decides the gate as ADR 0003 before the first child recording (plan Q11).
+
+- **Strict = GO:** recall ≥ 0.70 (Wilson 95 % lower bound ≥ 0.55), ≤ 3 false flags per 100 correct words,
+  precision ≥ 0.60.
+- **Lenient = CONTINUE:** recall ≥ 0.50 (lower bound ≥ 0.35), ≤ 5 false flags per 100, precision ≥ 0.50.
+- **Below lenient = NO-GO.**
+- Gate metrics use their worst-case variant: recall with unsure as correct (C), false flags with unsure as
+  flagged (F). Speed and agreement do not gate.
+- **Minimum before a call:** ≥ 60 real mistakes, ≥ 2,000 correctly read words, ≥ 40 reviewed attempts with ≥ 6 per
+  level; under 30 mistakes an engine's results are reported as counts only.
+- **Wording:** "these children, this microphone, laptop"; never "Bulgarian children"; laptop-verified, never
+  device-verified.
+- **Also before child data:** adult deliberate-mistake fixtures exist (R12), and the CTC "literal engine"
+  hypothesis is proven or dropped on them (finding 8).
+- Certainty of the thresholds: ~65 % (reasoned, no Bulgarian data exists).
+
+### Owner decision after the prototype passes, 2026-11-18
+
+- **Strict GDPR before anything beyond the prototype.** A GO (or CONTINUE toward a product) does not start any
+  product, commercial or other-family step until a strict GDPR pass is done. It covers lawful basis and parental
+  consent, DPIA, data minimisation, retention and deletion, EU-only processing, processor agreements, and the
+  household-exemption boundary (section 4; R17). It is planned as its own step with `privacy-law-researcher`, and
+  ends with an ADR.

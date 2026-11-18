@@ -1,0 +1,29 @@
+{
+  "behaviour": "score",
+  "cases": [
+    {"id": "all-correct", "marks": ["correct", "correct", "correct", "correct", "correct", "correct", "correct", "correct", "correct", "correct"], "duration_s": 60,
+     "expected": {"attempted": 10, "correct_C": 10, "correct_F": 10, "accuracy_C": 1.0, "accuracy_F": 1.0, "wcpm_C": 10.0, "wcpm_F": 10.0, "raw_wpm": 10.0, "unsure_per_100": 0.0},
+     "note": "Ten correct words in one minute."},
+    {"id": "mixed-misread-skipped", "marks": ["correct", "correct", "correct", "misread", "correct", "skipped", "correct", "correct"], "duration_s": 30,
+     "expected": {"attempted": 8, "correct_C": 6, "correct_F": 6, "accuracy_C": 0.75, "accuracy_F": 0.75, "wcpm_C": 12.0, "wcpm_F": 12.0, "raw_wpm": 16.0, "unsure_per_100": 0.0},
+     "note": "Skipped words count as attempted and not correct."},
+    {"id": "with-unsure-rounding", "marks": ["correct", "unsure", "correct", "correct", "misread", "unsure", "correct"], "duration_s": 42,
+     "expected": {"attempted": 7, "correct_C": 6, "correct_F": 4, "accuracy_C": 0.86, "accuracy_F": 0.57, "wcpm_C": 8.57, "wcpm_F": 5.71, "raw_wpm": 10.0, "unsure_per_100": 28.57},
+     "note": "Variant C counts unsure as correct, F does not; values rounded to 2 decimals."},
+    {"id": "not-attempted-tail", "marks": ["correct", "correct", "unsure", "skipped", "correct", "not_attempted", "not_attempted", "not_attempted"], "duration_s": 20,
+     "expected": {"attempted": 5, "correct_C": 4, "correct_F": 3, "accuracy_C": 0.8, "accuracy_F": 0.6, "wcpm_C": 12.0, "wcpm_F": 9.0, "raw_wpm": 15.0, "unsure_per_100": 20.0},
+     "note": "not_attempted words are excluded from attempted and from every figure."},
+    {"id": "all-not-attempted", "marks": ["not_attempted", "not_attempted", "not_attempted"], "duration_s": 5,
+     "expected": {"attempted": 0, "correct_C": 0, "correct_F": 0, "accuracy_C": null, "accuracy_F": null, "wcpm_C": 0.0, "wcpm_F": 0.0, "raw_wpm": 0.0, "unsure_per_100": null},
+     "note": "Nothing attempted: accuracy and unsure_per_100 are null, rates are 0."},
+    {"id": "short-duration", "marks": ["correct", "correct", "correct"], "duration_s": 2.5,
+     "expected": {"attempted": 3, "correct_C": 3, "correct_F": 3, "accuracy_C": 1.0, "accuracy_F": 1.0, "wcpm_C": 72.0, "wcpm_F": 72.0, "raw_wpm": 72.0, "unsure_per_100": 0.0},
+     "note": "A very short recording gives a high rate; no clamping."},
+    {"id": "unsure-heavy", "marks": ["unsure", "unsure", "correct", "misread"], "duration_s": 30,
+     "expected": {"attempted": 4, "correct_C": 3, "correct_F": 1, "accuracy_C": 0.75, "accuracy_F": 0.25, "wcpm_C": 6.0, "wcpm_F": 2.0, "raw_wpm": 8.0, "unsure_per_100": 50.0},
+     "note": "Many unsure words open a wide gap between variants C and F."},
+    {"id": "zero-duration", "marks": ["correct", "correct"], "duration_s": 0,
+     "expected": {"attempted": 2, "correct_C": 2, "correct_F": 2, "accuracy_C": 1.0, "accuracy_F": 1.0, "wcpm_C": null, "wcpm_F": null, "raw_wpm": null, "unsure_per_100": 0.0},
+     "note": "Zero duration with words attempted: rates are undefined, so null (no division by zero)."}
+  ]
+}

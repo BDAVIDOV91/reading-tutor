@@ -12,10 +12,13 @@ Real children's recordings and transcripts never become fixtures. Two kinds of f
 Hand-written `expected text → transcript → expected marking` cases. They need no audio and no engine, so they
 are the default for every alignment and scoring test.
 
-- Get cases from the `bulgarian-reading-specialist` agent, or write them and have it review them.
-- One table-driven test file per behaviour: syllable-by-syllable, repeats, self-correction, substitution,
-  skipped word, skipped line, added word, normalisation (case, punctuation, ѝ/и, numerals).
-- A bug in marking becomes a new row first (RED), then the fix.
+- Cases live in `tests/cases/<behaviour>.json` (`normalise`, `judge`, `align`, `score`), language-neutral, run
+  by `tests/unit/test_<behaviour>.py`. The rules they encode and the owner's approvals: `tests/cases/README.md`.
+- Get cases from the `bulgarian-reading-specialist` agent, or write them and have it review them. A new rule
+  (not just a new case) needs the owner's yes before RED, and a line in `tests/cases/README.md`.
+- A bug in marking becomes a new row first (RED), then the fix. Run it with
+  `uv run pytest tests/unit/test_align.py -k <case-id>`; the full gate is the `run-tests` skill.
+- Write Latin look-alike letters and combining marks as `\uXXXX` escapes, so the file shows what it tests.
 - To reproduce a problem seen with a child, the owner describes it in words ("she repeated the second word
   twice and it went orange") and the case is written from that description with invented text.
 

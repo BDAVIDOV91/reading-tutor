@@ -6,6 +6,12 @@
 # Child data: recordings, transcripts, attempt logs. Never committed.
 recordings/
 data/
+# Stray copies outside data/ (privacy review 2026-11-18): the log, its side files, exports, temp files
+*.sqlite
+*.sqlite-*
+*.db
+exports/
+tmp/
 
 # Audio anywhere, except adult-recorded or synthetic test fixtures
 *.wav
@@ -49,3 +55,12 @@ coverage/
 
 # Claude local state
 .claude/settings.local.json
+
+# Speed spike: owner's adult recording and local transcripts. Never committed.
+spike/audio/
+spike/out/
+
+# playwright-cli session output (snapshots, screenshots); machine-local
+.playwright-cli/
+.coverage
+htmlcov/

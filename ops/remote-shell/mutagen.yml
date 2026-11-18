@@ -1,0 +1,72 @@
+# Mutagen file sync M1 -> M2 for reading-tutor. Ported from ~/narrative-adventure/ops/remote-shell/mutagen.yml.
+# File sync only: there is no remote-shell wrapper in this repo (owner 2026-11-18); commands still run on M1.
+#
+# Create once (the owner runs it; it contacts M2 over ssh):
+#   mutagen sync create --name reading-tutor -c ops/remote-shell/mutagen.yml \
+#     /home/technojihad/reading-tutor m2:/home/technojihad/reading-tutor
+# Check:  mutagen sync list reading-tutor
+#
+# Same path on both machines.
+
+sync:
+  defaults:
+    mode: two-way-resolved
+    ignore:
+      # vcs: false means .git IS synced, so M2 sees the same commits. Never run git on M2: its worktree lacks every
+      # ignored path below, so git reads there lie and git writes escape into the shared index (pdfx 2026-08-26).
+      vcs: false
+      paths:
+        # --- CHILD DATA: never leaves M1 (CLAUDE.md "Child data", .claude/rules/child-data.md) ---
+        - 'recordings'
+        - 'data'
+        - '*.sqlite' # stray copies of the log outside data/ (privacy review 2026-11-18)
+        - '*.sqlite-*'
+        - '*.db'
+        - 'exports'
+        - 'tmp'
+        - 'spike/audio' # the owner's adult spike recording; stays on M1 like any voice
+        - 'spike/out' # local transcripts
+        - '*.wav'
+        - '*.mp3'
+        - '*.m4a'
+        - '*.ogg'
+        - '*.oga'
+        - '*.opus'
+        - '*.webm'
+        - '*.flac'
+        - '*.aac'
+        - '*.3gp'
+        - '!tests/fixtures/**' # adult-recorded or synthetic fixtures only, already committed
+
+        # --- secrets and key material ---
+        - '.env*'
+        - '!.env.example'
+        - '*.pem'
+        - '*.key'
+        - '*.crt'
+        - '*.p12'
+        - '*.pfx'
+        - '*-credentials.json'
+        - '*-service-account.json'
+        - '.claude/settings.local.json'
+
+        # --- rebuilt per machine, never synced (compiled binaries, absolute paths) ---
+        - 'venv'
+        - '.venv'
+        - 'node_modules'
+        - 'models' # weights live in each machine's HF cache or models/
+
+        # --- build output, caches, machine-local artifacts ---
+        - 'dist'
+        - 'build'
+        - 'coverage'
+        - '.coverage'
+        - 'htmlcov'
+        - 'test-results'
+        - 'playwright-report'
+        - '.playwright-cli'
+        - '__pycache__'
+        - '.pytest_cache'
+        - '.ruff_cache'
+        - '.mypy_cache'
+        - '*.log'

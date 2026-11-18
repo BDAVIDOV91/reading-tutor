@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="bg">
+<head><meta charset="utf-8"><title>e2e mic harness</title></head>
+<body>
+<p>Harness page for the e2e layer: records one second from the (fake) microphone.</p>
+<script>
+  // Called by tests/e2e/test_browser_harness.py through playwright-cli eval.
+  window.recordOneSecond = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const track = stream.getAudioTracks()[0];
+    const rec = new MediaRecorder(stream);
+    const chunks = [];
+    rec.ondataavailable = (e) => chunks.push(e.data);
+    const stopped = new Promise((resolve) => (rec.onstop = resolve));
+    rec.start();
+    await new Promise((r) => setTimeout(r, 1000));
+    rec.stop();
+    await stopped;
+    track.stop();
+    const blob = new Blob(chunks, { type: rec.mimeType });
+    return { label: track.label, mime: rec.mimeType, bytes: blob.size, secure: window.isSecureContext };
+  };
+</script>
+</body>
+</html>

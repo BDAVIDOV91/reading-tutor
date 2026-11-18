@@ -19,7 +19,8 @@ procedure. Claude sees aggregate numbers only.
 
 1. **Check the report command exists.** It prints, per engine and per text level: attempts, words, words the
    parent marked wrong, and the four cells of *parent wrong / app wrong*. Counts only, no text. If it does not
-   exist yet, building it (test-first) is the task; the metric definitions come from the `engine-evaluator` agent.
+   exist yet, building it (test-first) is the task; the metric formulas (variants C and F) and the log fields
+   are fixed in `docs/adr/0001-testing-log-format.md`.
 2. **Ask the owner to run it** and paste the output.
 3. **Compute per engine:** mistake recall, mistake precision, false flags per 100 correctly read words, agreement
    with the parent, median transcription time. Rates on fewer than about 30 real mistakes are given as counts.
@@ -40,4 +41,6 @@ procedure. Claude sees aggregate numbers only.
 
 ## Go / no-go
 
-Thresholds are the owner's decision, recorded once in `docs/adr/`. Until then, present numbers without a verdict.
+Thresholds are the owner's decision, recorded as ADR 0003 before the first child recording. The
+`engine-evaluator`'s three-way proposal (strict GO / lenient CONTINUE / NO-GO, with the minimum sample) is the
+input, in `docs/research/2026-11-18_reading-tutor-requirements.md` §Go / no-go proposal. Until ADR 0003 exists, present numbers without a verdict.
