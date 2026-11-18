@@ -19,7 +19,8 @@ pytestmark = pytest.mark.unit
 FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"
 SIDECARS = sorted((FIXTURES / "sidecars").glob("*.json"))
 MANIFEST = FIXTURES / "FIXTURES.md"
-KINDS = {"clean", "syllables", "misreads_skip", "repeats_selfcorrection"}
+FIRST_SET_KINDS = {"clean", "syllables", "misreads_skip", "repeats_selfcorrection"}
+KINDS = FIRST_SET_KINDS | {"misreads"}
 FIELDS = {
     "id", "text_id", "kind", "speaker", "recorded_by", "device", "audio", "instructions", "planned",
     "reference_transcript", "expected_marks",
@@ -32,16 +33,16 @@ def _load(path: Path) -> dict:
 
 
 def test_first_set_is_eight_clips_two_texts_four_kinds():
-    data = [_load(p) for p in SIDECARS]
+    data = [_load(p) for p in SIDECARS if p.stem[:3] in {f"f0{i}" for i in range(1, 9)}]
     assert len(data) == 8
     pairs = {(d["text_id"], d["kind"]) for d in data}
-    assert pairs == {(t, k) for t in ("t1-mila-pee", "t5-patitsite-v-parka") for k in KINDS}
+    assert pairs == {(t, k) for t in ("t1-mila-pee", "t5-patitsite-v-parka") for k in FIRST_SET_KINDS}
 
 
 @pytest.mark.parametrize("path", SIDECARS, ids=lambda p: p.stem)
 def test_sidecar_schema(path: Path):
     d = _load(path)
-    assert set(d) == FIELDS
+    assert FIELDS <= set(d) <= FIELDS | {"read_aloud"}  # read_aloud: the text window for scripts/record-fixture.sh
     assert d["id"] == path.stem
     assert d["speaker"] == "adult"  # never a child (CLAUDE.md, child data)
     assert d["kind"] in KINDS

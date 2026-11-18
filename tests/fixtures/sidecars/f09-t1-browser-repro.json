@@ -1,0 +1,73 @@
+{
+ "id": "f09-t1-browser-repro",
+ "text_id": "t1-mila-pee",
+ "kind": "misreads",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse, input 16 %)",
+ "audio": "audio-local/f09-t1-browser-repro.wav",
+ "instructions": "Repeat of the owner's first laptop-browser check (2026-11-18): read once at the same pace, with 'бама' for баба and 'вие' for пие. In the browser turbo also flagged Мила and пее (false flags); this clip reproduces that with an adult voice.",
+ "planned": [
+  "word 4 'баба' read as 'бама'",
+  "word 8 'пие' read as 'вие' (one-letter neighbour)"
+ ],
+ "read_aloud": "Ето мама и <b>бама</b>.\nМила пее.\nТото <b>вие</b> вода.\nКоза пасе.",
+ "reference_transcript": "ето мама и бама мила пее тото вие вода коза пасе",
+ "expected_marks": [
+  {
+   "word": "ето",
+   "mark": "correct",
+   "heard": "ето"
+  },
+  {
+   "word": "мама",
+   "mark": "correct",
+   "heard": "мама"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "баба",
+   "mark": "misread",
+   "heard": "бама"
+  },
+  {
+   "word": "мила",
+   "mark": "correct",
+   "heard": "мила"
+  },
+  {
+   "word": "пее",
+   "mark": "correct",
+   "heard": "пее"
+  },
+  {
+   "word": "тото",
+   "mark": "correct",
+   "heard": "тото"
+  },
+  {
+   "word": "пие",
+   "mark": "misread",
+   "heard": "вие"
+  },
+  {
+   "word": "вода",
+   "mark": "correct",
+   "heard": "вода"
+  },
+  {
+   "word": "коза",
+   "mark": "correct",
+   "heard": "коза"
+  },
+  {
+   "word": "пасе",
+   "mark": "correct",
+   "heard": "пасе"
+  }
+ ]
+}
