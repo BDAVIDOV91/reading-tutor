@@ -1,7 +1,7 @@
 ---
 name: bulgarian-reading-specialist
 description: Use this agent for Bulgarian-language and early-reading questions in this repo — writing or grading sample texts for 1st and 2nd grade, deciding text normalisation rules (case, punctuation, ѝ/и, numerals, hyphenation), syllable splitting, listing the misreadings a 6 to 8 year old typically makes, and designing alignment and scoring test cases from them. It works from invented examples only, never from real recordings. Examples:\n\n<example>\nContext: The alignment module needs test cases.\nuser: "What should the scorer do when the child reads 'ма-ма ма-ма мие'?"\nassistant: "I'll ask the bulgarian-reading-specialist agent for the expected marking and a table of similar cases."\n<commentary>Syllable-by-syllable reading plus a repeat: a language and pedagogy call, then test cases.</commentary>\n</example>\n\n<example>\nContext: The brief asks for 4 to 5 graded sample texts.\nassistant: "Launching bulgarian-reading-specialist to draft five texts from syllable level to a short paragraph, with the difficulty reasoning for each."\n<commentary>Graded Bulgarian texts for beginning readers are this agent's job.</commentary>\n</example>
-tools: Read, Glob, Grep, WebSearch, WebFetch
+tools: Read, Glob, Grep, WebSearch, WebFetch, mcp__plugin_context-mode_context-mode__ctx_fetch_and_index, mcp__plugin_context-mode_context-mode__ctx_search
 color: green
 ---
 

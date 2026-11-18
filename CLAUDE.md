@@ -27,8 +27,13 @@ Never delegate to `general-purpose`: if no named agent fits, create one with a n
 **Per fix:** write a test that fails on the old code (RED), fix, see it pass (GREEN), run the full suite. The test
 stays in the suite forever. No fix ships without its own regression test.
 
-**Verification words:** "test-verified" means an automated test passed. "device-verified" means it was seen
-working on the phone with a real microphone. Never merge the two, and never claim the second from the first.
+**Verification words:** "test-verified" means an automated test passed. "laptop-verified" means it was seen
+working in the laptop browser with the laptop microphone. "device-verified" means it was seen working on the
+phone with a real microphone. Never merge them, and never claim a later one from an earlier one.
+
+**Prototype runs in the laptop browser first** (owner decision 2026-11-18, a deviation from brief scope item 1).
+A laptop "no" is not final until repeated with a phone microphone. Decisions, challenger findings and
+requirements: `docs/research/2026-11-18_reading-tutor-requirements.md`.
 
 ## Decisions
 

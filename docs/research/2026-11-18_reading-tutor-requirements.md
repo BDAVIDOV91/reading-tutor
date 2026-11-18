@@ -180,7 +180,44 @@ agreement with humans), SoapBox Labs (phoneme-level scoring, languages not found
   local certificate. **Decided: laptop browser only for the prototype.** The phone is added only if the
   laptop test passes. Consequence: plan step 5 (mkcert) is deferred, and laptop-microphone results do not
   prove phone-microphone accuracy.
-- Q5 and Q6: defaults stated to the owner (an "unsure" state; original texts), no objection recorded yet.
+- Q5 and Q6: the owner delegated both (`/decide`). Decided: **add the "unsure" state** (a fourth marking for
+  near matches, settled by the parent's tap; the log keeps the engine's and the parent's marking separately),
+  and **write original sample texts** (public-domain folk sayings may be mixed in; no protected authors).
+- New idea, under research before any build decision: say the book title aloud, the app obtains the book's
+  text and follows the child's place in it. Findings will go to a separate research file.
+
+## Challenger Findings (A: REVISE, B: REVISE)
+
+Two independent `challenger` agents reviewed the decisions above on 2026-11-18. Both: revise, high confidence.
+No decision was rejected and no privacy breach found; the agreed findings and what was done with each:
+
+| # | Finding (both challengers unless noted) | Resolution |
+|---|---|---|
+| 1 | **The reason given for "unsure" was wrong.** When Whisper outputs the expected word for a misread, that is an exact match and shows green; "unsure" never sees it. Near matches are the opposite case. | Accepted. "Unsure" is kept as a prototype measuring aid, not a product state, and not as protection against hidden mistakes. |
+| 2 | **Mistake recall cannot be measured if the parent only taps words that look wrong.** Untouched green words then count as agreement. | Accepted: per-attempt "whole attempt reviewed" flag; recall computed from reviewed attempts only; audio replay on the results screen; one parent marking per word, independent of engine. Owner asked whether to mark before seeing engine colours. |
+| 3 | "Unsure" has no counting rule; 4-letter words undefined; metric unnamed; 0.8 unmeasured; reversal rule untestable. | Accepted: every metric reported twice (unsure as flagged, unsure as correct) plus unsure per 100 words; 4-letter rule and metric named in the ADR; 0.8 labelled an untuned start, tuned on adult deliberate-mistake fixtures; reversal judged per engine on 50+ settled words. |
+| 4 | **Cloud rule has no lock.** "Run all engines" could send a child's recording out. | Accepted: no cloud engine is built in the first loops. If one is added later it lives outside the app and accepts only files under `tests/fixtures/`, with a test. |
+| 5 | **Laptop-only contradicts brief scope item 1, makes "device-verified" unreachable, and its gate can give a false "no".** | Brief deviation recorded here; new term "laptop-verified". Gate change put to the owner. Every attempt logs the input device. |
+| 6 | Speed spike too narrow; speed must not exclude models from evaluation. | Accepted: spike measures time and peak memory for Whisper small, medium, turbo, the CTC model and Parakeet, one model loaded at a time, on a slow two-minute adult read, with a pass figure set first. Slow models run as an offline batch on saved recordings. |
+| 7 | No go / no-go numbers or minimum sample before data. | Accepted in principle: numbers proposed through `engine-evaluator` and decided by the owner before the first child recording; minimum count of real mistakes stated; results worded as "these children, this microphone". |
+| 8 | "CTC = literal engine" is a hypothesis; its false-flag rate may be very high. | Accepted: proven or dropped on adult deliberate-mistake fixtures before any child attempt. |
+| 9 | Python core: "reuse" undefined. | Accepted: reuse means server-side or a port checked by the same language-neutral test-case files; similarity sits behind one function. |
+| 10 | Texts: free classic authors exist; folk sayings are memorised sequences that maximise engine "correction"; a word list and a paragraph are different test conditions. | Accepted: sayings kept out of the graded set (one labelled text at most); one public-domain passage added as a labelled sixth text; texts include one-letter-neighbour words, `ѝ` and a number written as a word; each text reviewed by `bulgarian-reading-specialist` and approved by the owner. |
+| 11 | No ADR for the one-way doors. | Accepted: ADRs for the log format (word states, parent marking, engine settings, schema version) and for the laptop-only deviation, before code. |
+| 12 | (B) CSV saved through the browser lands in Downloads, beyond "Delete all". | Accepted: exports are written under `data/exports/`; the owner is told that copies moved elsewhere are not covered. |
+| 13 | (B) Model downloads contact Hugging Face. | Accepted: download once, then offline mode with telemetry off; stated in the plan. |
+| 14 | Book-following is brief Part 1 (out of scope), not merely deferred. | Accepted: labelled out of scope; any build needs a positive prototype answer and the owner amending the brief. |
+| 15 | (A) Adult fixtures are committed to git, so the voice enters history. | Noted for the fixtures step: owner confirms before `git add`, as `reading-fixtures` already requires. |
+
+### Owner decisions after the challenge, 2026-11-18
+
+- **Laptop gate:** a laptop "yes" moves on; a laptop "no" is not final until the test is repeated with a phone
+  microphone.
+- **Review:** the results screen has audio replay and an "I reviewed the whole attempt" control. Only reviewed
+  attempts count toward engine accuracy; quick taps are allowed but not counted. Engine colours stay visible
+  while marking.
+- **Book-following:** parked until the prototype passes. Research on file in `2026-11-18_book-following.md`
+  (search summaries only, unverified); the page-photo route is the one to revisit.
 
 ## Confidence and gaps
 

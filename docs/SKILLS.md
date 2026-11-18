@@ -39,6 +39,7 @@ is also added.
 | `stt-researcher` | AUTO | Web research on engines, models, children's speech accuracy, alignment, streaming, prior art. | Read-only; sourced findings. |
 | `privacy-law-researcher` | AUTO | Web research on GDPR and Bulgarian child-data rules, provider data terms, AI Act, copyright of texts. | Read-only; sourced findings, not legal advice. |
 | `browser-audio-researcher` | AUTO | Web research on mobile microphone capture, local HTTPS without a public URL, audio formats. | Read-only; sourced findings. |
+| `book-source-researcher` | AUTO | Web research on where a book's text can come from: online libraries, automatic download and its terms, OCR from a page photo, matching editions. | Read-only; sourced findings. Downloads no book texts. |
 
 No agent reads `recordings/` or `data/`. One agent per question; at most two running at once.
 

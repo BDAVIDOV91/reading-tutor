@@ -1,7 +1,7 @@
 ---
 name: engine-evaluator
 description: Use this agent to design or audit how speech-to-text engines are compared in this repo, and to interpret aggregate comparison numbers — which metrics answer "can the engine follow a child and detect mistakes", how many recordings are enough, whether a reported accuracy is honest about its sample, and what result means go or no-go for the real app. It reads code, fixtures and aggregate statistics only, never children's audio or transcripts. Examples:\n\n<example>\nContext: Three engines are wired and the owner has recorded test sessions.\nuser: "Which engine is best so far?"\nassistant: "I'll have you run the aggregate report, then pass the numbers to the engine-evaluator agent to interpret them and say whether the sample is large enough."\n<commentary>Interpretation of engine comparison numbers, from aggregates only.</commentary>\n</example>\n\n<example>\nContext: Planning the testing log.\nassistant: "Launching engine-evaluator to specify which fields the log must store so mistake-detection precision and recall can be computed later."\n<commentary>Evaluation design before the log format becomes a one-way door.</commentary>\n</example>
-tools: Read, Bash, Glob, Grep, WebSearch, WebFetch
+tools: Read, Bash, Glob, Grep, WebSearch, WebFetch, mcp__plugin_context-mode_context-mode__ctx_fetch_and_index, mcp__plugin_context-mode_context-mode__ctx_search
 color: blue
 ---
 
