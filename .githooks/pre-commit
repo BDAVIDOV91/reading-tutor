@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Git pre-commit hook. Enable once per clone: git config core.hooksPath .githooks
+# Runs every Claude hook regression test when a hook or .claude/settings.json is staged; a failure blocks the
+# commit. Lint, typecheck and the test-removal guard are added once the stack is chosen.
+set -u
+root="$(git rev-parse --show-toplevel)" || exit 1
+cd "$root" || exit 1
+
+if ! git diff --cached --name-only --diff-filter=ACMRD | grep -Eq '^(\.claude/hooks/|\.claude/settings\.json$|\.githooks/)'; then
+  exit 0
+fi
+
+if ! python3 -c 'import json,sys; json.load(open(".claude/settings.json"))' 2>/dev/null; then
+  echo "pre-commit: .claude/settings.json is not valid JSON" >&2
+  exit 1
+fi
+
+failed=0
+for t in .claude/hooks/test-*.sh; do
+  [ -f "$t" ] || continue
+  if out="$(bash "$t" 2>&1)"; then
+    echo "pre-commit: PASS $t"
+  else
+    echo "pre-commit: FAIL $t" >&2
+    printf '%s\n' "$out" | tail -n 20 >&2
+    failed=1
+  fi
+done
+
+if [ "$failed" -ne 0 ]; then
+  echo "pre-commit: hook tests failed, commit blocked" >&2
+  exit 1
+fi
+exit 0

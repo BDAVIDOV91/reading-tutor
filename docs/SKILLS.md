@@ -1,0 +1,76 @@
+# Skills, plugins, agents and hooks: when each one is invoked
+
+Single source of truth for who may invoke what in this repo. Pointed at from `CLAUDE.md`.
+
+## Modes
+
+| Mode | Meaning |
+|---|---|
+| **AUTO** | Claude invokes it on the trigger without asking. The skill's own safety rules still apply. |
+| **ASK** | Claude names it and the reason, then waits for approval. The default for anything not listed here. |
+| **OWNER** | Runs when the owner types `/<name>`. Claude may suggest it through `AskUserQuestion`, never start it. |
+
+## Project skills (`.claude/skills/`)
+
+| Skill | Mode | Trigger | Touches |
+|---|---|---|---|
+| `grilling` | AUTO | In plan mode, before a plan is presented; or the owner says "grill". | Questions only. |
+| `grill-with-docs` | AUTO | In plan mode when the plan introduces domain terms or a one-way decision. | `GLOSSARY.md`, `docs/adr/`. |
+| `domain-modeling` | AUTO | Called by `grill-with-docs`; or a term or one-way decision is settled. | `GLOSSARY.md`, `docs/adr/`. |
+| `writing-for-agents` | AUTO | Before editing `CLAUDE.md`, a skill, an agent or a rule file. | Read-only reference. |
+| `retro` | OWNER | `/retro` after a session. | Report only; changes wait for the owner. |
+| `wait-what` | OWNER | `/wait-what` when a message did not land. | Re-pitches the last message. |
+| `add-stt-engine` | AUTO | A plan or task adds an engine, switches a model, or changes where audio goes. | Engine code, `.env.example`, `docs/adr/` (cloud engine: owner's yes first). |
+| `engine-eval` | AUTO | "Which engine is better", accuracy, go/no-go, the testing checklist. | Aggregates only; `docs/research/` after approval. |
+| `reading-fixtures` | AUTO | Writing alignment, scoring or engine tests; reproducing a bug; a request to test with a real recording. | `tests/fixtures/`. Audio fixture: owner confirms adult voice before `git add`. |
+
+The first six are vendored (source and pin: `.claude/skills/POCOCK-SKILLS-PROVENANCE.md`); the last three are
+written for this repo and are updated with real commands and paths once the stack is chosen, when `run-tests`
+is also added.
+
+## Project agents (`.claude/agents/`)
+
+| Agent | Mode | Trigger | Touches |
+|---|---|---|---|
+| `challenger` | AUTO after the owner picks "Challenge" at the plan checkpoint | Two in parallel, each given the plan path. | Read-only; findings are merged into the plan file. |
+| `privacy-reviewer` | AUTO | Before the checkpoint, when a diff touches audio, storage, STT clients, the log, export, logging or the server. | Read-only review of the diff. |
+| `bulgarian-reading-specialist` | AUTO | Sample texts, normalisation rules, child misreading patterns, alignment test cases. | Read-only; returns text and tables. Invented examples only. |
+| `engine-evaluator` | AUTO | Designing or auditing the engine comparison; interpreting aggregate numbers. | Read-only; aggregates only. |
+
+No agent reads `recordings/` or `data/`. One agent per question; at most two running at once.
+
+## Plugins and global skills
+
+| Name | Mode | Trigger |
+|---|---|---|
+| `superpowers:test-driven-development` | AUTO | Any feature or fix. |
+| `superpowers:systematic-debugging` | AUTO | Any bug, test failure or unexpected behaviour. |
+| `superpowers:verification-before-completion` | AUTO | Before claiming work is done or passing. |
+| `superpowers:brainstorming` | ASK | `grilling` owns the plan-mode interview; do not stack both. |
+| other `superpowers:*` | ASK | |
+| `research` (global) | AUTO | An external question (engine, pricing, regulation); output to `docs/research/`. |
+| `decide`, `graphify` (global) | OWNER | `/decide`, `/graphify`. |
+| `frontend-design` (global) | ASK | The brief puts visual polish out of scope. |
+
+## Hooks (`.claude/hooks/`, wired in `.claude/settings.json`)
+
+| Hook | Event | Does |
+|---|---|---|
+| `block-dangerous-git.sh` | PreToolUse Bash | Blocks stash, push, `gh pr create`, hard reset, clean, `branch -D`, blanket or forced add. |
+| `plan-challenge-checkpoint.sh` | PostToolUse ExitPlanMode | Asks "Challenge or proceed?" unless the plan already records both verdicts. |
+| `log-recommendation.sh` | PostToolUse AskUserQuestion | Appends each answer to `decision-log.jsonl` outside the repo. |
+| `precompact-snapshot.sh` | PreCompact | Saves branch, dirty files, plan and transcript paths. |
+| `compact-resume.sh` | SessionStart (compact only) | Re-injects that snapshot after a compaction. |
+
+Each hook has a `test-*.sh` beside it; `.githooks/pre-commit` runs them all when a hook or the settings file is
+staged. There are no hooks on a normal session start, on purpose.
+
+## Adding a skill, plugin, agent or hook
+
+Start small: add one only after the same need has come up twice. Before committing it, settle with the owner:
+trigger (one sentence), mode, what it touches, and which existing entry shares the trigger and who wins. Add the
+row here in the same commit. A new hook ships with its `test-*.sh`.
+
+Deliberately not ported from `pdf_data_extractor_v2`: `infra-ask`, `night-guard`, `block-value-reads`,
+`preflight-card`, doc-freshness, wayfinder, deploy and prod skills, marketing and accounting agents, mods,
+`.mcp.json`, and the skill-interview and drift-check hooks (add those two if this inventory grows).

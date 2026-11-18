@@ -1,0 +1,51 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Child data: recordings, transcripts, attempt logs. Never committed.
+recordings/
+data/
+
+# Audio anywhere, except adult-recorded or synthetic test fixtures
+*.wav
+*.mp3
+*.m4a
+*.ogg
+*.oga
+*.opus
+*.webm
+*.flac
+*.aac
+*.3gp
+!tests/fixtures/**
+
+# Model weights
+models/
+*.bin
+*.gguf
+*.ggml
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.ckpt
+
+# Local TLS material for serving over HTTPS on the home network
+*.pem
+*.key
+*.crt
+
+# Dependencies and caches
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+build/
+coverage/
+
+# Claude local state
+.claude/settings.local.json
