@@ -101,6 +101,11 @@ all constants untuned):
     was an exact anchor (otherwise the echo is a late self-correction; last attempt wins). The echo need not be
     the last heard token. Then the misread option wins and `judge()` decides the mark. Mid-text gaps are
     unchanged (a skip already costs 1). Core version 0.5.0. Cases `rule19-*`.
+    Accepted risk (owner 2026-11-19, fixtures f10/f12/f14): turbo wrote "пее" both for a spoken пасе (f10) and a
+    spoken пее (f12), so a transcript cannot tell a real misread from an engine echo, and rule 19 may mark a
+    correct t1 "пасе" as misread (at worst one false "try again"). The echo did not repeat in the f14 re-take.
+    t1 stays as it is. Known fault, aligner step 5: a rule-17 match just before the echo (`вода куза пее`)
+    leaves коза and пасе `not_attempted` (f12).
 
 `WordMark.via` is core-only and never written to the log (no schema change); the engine eval can re-run `align`
 and count how many marks rules 17 and 18 decided.

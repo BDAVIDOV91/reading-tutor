@@ -27,5 +27,8 @@ bash scripts/record-fixture.sh <id> [seconds]   # shows the text in a window; cl
 | `audio-local/f09-t1-browser-repro.wav` | t1-mila-pee | 2 misreads (бама, вие): repeat of the first laptop-browser check | owner | adult |
 | `audio-local/f10-t1-reduction.wav` | t1-mila-pee | natural vowel reduction (rule 17), all correct | owner | adult |
 | `audio-local/f11-t5-stop-silence.wav` | t5-patitsite-v-parka | stops after word 14, then ~5 s silence (rule 16 vs trailing hallucinations) | owner | adult |
+| `audio-local/f12-t1-spoken-pee.wav` | t1-mila-pee | last word spoken as пее, not пасе (rule 19 vs a real misread) | owner | adult |
+| `audio-local/f13-t1-spoken-pee-filler.wav` | t1-mila-pee | as f12, then ~2 s pause, one soft "ъъъ", ~5 s silence | owner | adult |
+| `audio-local/f14-t1-pase-retake.wav` | t1-mila-pee | re-take of f10 (spoken пасе): does turbo's пее echo repeat? | owner | adult |
 
 The full set of 30 clips comes before any engine verdict (step 2 plan S6).

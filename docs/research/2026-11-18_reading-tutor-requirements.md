@@ -251,3 +251,10 @@ The owner decides the gate as ADR 0003 before the first child recording (plan Q1
   consent, DPIA, data minimisation, retention and deletion, EU-only processing, processor agreements, and the
   household-exemption boundary (section 4; R17). It is planned as its own step with `privacy-law-researcher`, and
   ends with an ADR.
+
+### Owner decision on t1's last word, 2026-11-19
+
+- Adult fixtures f10/f12/f14: turbo wrote "пее" both for a spoken пасе (f10) and a spoken пее (f12); a re-take of
+  f10 (f14) did not repeat the echo. The transcript cannot tell a real misread from an engine echo, so aligner
+  rule 19 may mark a correct "пасе" as misread. **Accepted for the prototype; t1 stays** (changing it would
+  invalidate the t1 fixtures). Detail: `tests/cases/README.md` rule 19. Test-verified on an adult only.

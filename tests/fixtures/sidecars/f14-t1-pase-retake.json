@@ -1,0 +1,29 @@
+{
+ "id": "f14-t1-pase-retake",
+ "text_id": "t1-mila-pee",
+ "kind": "reduction",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse, input 16 %)",
+ "audio": "audio-local/f14-t1-pase-retake.wav",
+ "instructions": "Read the whole text once, fluently, at a natural adult pace with natural unstressed vowels (do not exaggerate, do not over-articulate), exactly as in f10, ending 'Коза пасе' as printed. A second take of f10, to see whether turbo's пее echo repeats: f10 was a spoken пасе written as 'пее', and turbo gives the same output every time on the same file, so only a new take answers this. Record 15 s, the same as f10.",
+ "planned": [
+  "a second take of f10: natural unstressed vowel reduction, not exaggerated",
+  "all 11 words read correctly, last word spoken as 'пасе'"
+ ],
+ "read_aloud": "Ето мама и баба.\nМила пее.\nТото пие вода.\nКоза пасе.",
+ "reference_transcript": "ето мамъ и бабъ милъ пее тото пие вуда куза пасе",
+ "expected_marks": [
+  {"word": "ето", "mark": "correct", "heard": "ето"},
+  {"word": "мама", "mark": "correct", "heard": "мамъ"},
+  {"word": "и", "mark": "correct", "heard": "и"},
+  {"word": "баба", "mark": "correct", "heard": "бабъ"},
+  {"word": "мила", "mark": "correct", "heard": "милъ"},
+  {"word": "пее", "mark": "correct", "heard": "пее"},
+  {"word": "тото", "mark": "correct", "heard": "тото"},
+  {"word": "пие", "mark": "correct", "heard": "пие"},
+  {"word": "вода", "mark": "correct", "heard": "вуда"},
+  {"word": "коза", "mark": "correct", "heard": "куза"},
+  {"word": "пасе", "mark": "correct", "heard": "пасе"}
+ ]
+}

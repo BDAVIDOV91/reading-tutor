@@ -1,0 +1,30 @@
+{
+ "id": "f12-t1-spoken-pee",
+ "text_id": "t1-mila-pee",
+ "kind": "misreads",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse, input 16 %)",
+ "audio": "audio-local/f12-t1-spoken-pee.wav",
+ "instructions": "Read the whole text once, calmly, at a natural adult pace with natural (not exaggerated) unstressed vowels, as in f10. In the last sentence say 'Коза пее' (NOT пасе): the window already shows пее. Do not stress or slow down on it; say it like any other word. Then stay silent until the window closes. Listen back to the last two words before keeping the take: if you said пасе, record again. Tests whether turbo writes what was spoken: f10 was a spoken пасе written as пее. Record 15 s, the same as f10.",
+ "planned": [
+  "all words 0-9 read correctly, natural pace",
+  "last word spoken as 'пее' instead of 'пасе' (a deliberate misread)",
+  "silence to the end of the clip, as in f10"
+ ],
+ "read_aloud": "Ето мама и баба.\nМила пее.\nТото пие вода.\nКоза <b>пее</b>.",
+ "reference_transcript": "ето мама и баба мила пее тото пие вода коза пее",
+ "expected_marks": [
+  {"word": "ето", "mark": "correct", "heard": "ето"},
+  {"word": "мама", "mark": "correct", "heard": "мама"},
+  {"word": "и", "mark": "correct", "heard": "и"},
+  {"word": "баба", "mark": "correct", "heard": "баба"},
+  {"word": "мила", "mark": "correct", "heard": "мила"},
+  {"word": "пее", "mark": "correct", "heard": "пее"},
+  {"word": "тото", "mark": "correct", "heard": "тото"},
+  {"word": "пие", "mark": "correct", "heard": "пие"},
+  {"word": "вода", "mark": "correct", "heard": "вода"},
+  {"word": "коза", "mark": "correct", "heard": "коза"},
+  {"word": "пасе", "mark": "misread", "heard": "пее"}
+ ]
+}

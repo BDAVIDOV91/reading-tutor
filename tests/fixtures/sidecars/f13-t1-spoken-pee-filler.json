@@ -1,0 +1,31 @@
+{
+ "id": "f13-t1-spoken-pee-filler",
+ "text_id": "t1-mila-pee",
+ "kind": "misreads",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse, input 16 %)",
+ "audio": "audio-local/f13-t1-spoken-pee-filler.wav",
+ "instructions": "Same calm read as f12, ending 'Коза пее' (NOT пасе). After 'пее', stay silent for about 2 s (count 'двайсет и едно, двайсет и две' silently). Then make one soft, hesitant 'ъъъ', about 1 s long. Mouth slightly open, relaxed, like the Bulgarian ъ in 'ъгъл' held out, as if thinking. Not 'ммм' (lips closed), not 'ааа', not a word. Then stay completely silent until the window closes (about 5 s). Listen back: the last word must be пее. Tests rule 19 with a trailing filler, and whether turbo invents words in the silence after ъъъ. Record 20 s.",
+ "planned": [
+  "all words 0-9 read correctly, natural pace",
+  "last word spoken as 'пее' instead of 'пасе'",
+  "~2 s pause, then one soft 'ъъъ' (~1 s)",
+  "~5 s silence to the end (Whisper may hallucinate 'Благодаря.' or 'Абонирайте се')"
+ ],
+ "read_aloud": "Ето мама и баба.\nМила пее.\nТото пие вода.\nКоза <b>пее</b>. <b>[пауза]</b> ъъъ <b>[мълчи]</b>",
+ "reference_transcript": "ето мама и баба мила пее тото пие вода коза пее ъъъ",
+ "expected_marks": [
+  {"word": "ето", "mark": "correct", "heard": "ето"},
+  {"word": "мама", "mark": "correct", "heard": "мама"},
+  {"word": "и", "mark": "correct", "heard": "и"},
+  {"word": "баба", "mark": "correct", "heard": "баба"},
+  {"word": "мила", "mark": "correct", "heard": "мила"},
+  {"word": "пее", "mark": "correct", "heard": "пее"},
+  {"word": "тото", "mark": "correct", "heard": "тото"},
+  {"word": "пие", "mark": "correct", "heard": "пие"},
+  {"word": "вода", "mark": "correct", "heard": "вода"},
+  {"word": "коза", "mark": "correct", "heard": "коза"},
+  {"word": "пасе", "mark": "misread", "heard": "пее"}
+ ]
+}
