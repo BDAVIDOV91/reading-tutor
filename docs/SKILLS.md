@@ -14,7 +14,7 @@ Single source of truth for who may invoke what in this repo. Pointed at from `CL
 
 | Skill | Mode | Trigger | Touches |
 |---|---|---|---|
-| `grilling` | AUTO | In plan mode, before a plan is presented; or the owner says "grill". | Questions only. |
+| `grilling` | AUTO | In plan mode, before a plan is presented; or the owner says "grill". | Questions; a round outside plan mode is recorded in the plan under `## Decisions YYYY-MM-DD (<topic>)`. |
 | `grill-with-docs` | AUTO | In plan mode when the plan introduces domain terms or a one-way decision. | `GLOSSARY.md`, `docs/adr/`. |
 | `domain-modeling` | AUTO | Called by `grill-with-docs`; or a term or one-way decision is settled. | `GLOSSARY.md`, `docs/adr/`. |
 | `writing-for-agents` | AUTO | Before editing `CLAUDE.md`, a skill, an agent or a rule file. | Read-only reference. |
@@ -34,7 +34,7 @@ The first six are vendored (source and pin: `.claude/skills/POCOCK-SKILLS-PROVEN
 
 | Agent | Mode | Trigger | Touches |
 |---|---|---|---|
-| `challenger` | AUTO after the owner picks "Challenge" at the plan checkpoint | Two in parallel, each given the plan path. | Read-only; findings are merged into the plan file. |
+| `challenger` | AUTO after the owner picks "Challenge" at the plan checkpoint, and after a mid-session grilling round | Two in parallel, each given the plan path (and the decisions section). | Read-only; findings are merged into the plan file. |
 | `privacy-reviewer` | AUTO | Before the checkpoint, when a diff touches audio, storage, STT clients, the log, export, logging or the server. | Read-only review of the diff. |
 | `bulgarian-reading-specialist` | AUTO | Sample texts, normalisation rules, child misreading patterns, alignment test cases. | Read-only; returns text and tables. Invented examples only. |
 | `engine-evaluator` | AUTO | Designing or auditing the engine comparison; interpreting aggregate numbers. | Read-only; aggregates only. |
@@ -67,7 +67,7 @@ purpose first, add its row here, then use it, so it is there the second time.
 | Hook | Event | Does |
 |---|---|---|
 | `block-dangerous-git.sh` | PreToolUse Bash | Blocks stash, push, `gh pr create`, hard reset, clean, `branch -D`, blanket or forced add. |
-| `plan-challenge-checkpoint.sh` | PostToolUse ExitPlanMode | Asks "Challenge or proceed?" unless the plan already records both verdicts. |
+| `plan-challenge-checkpoint.sh` | PostToolUse ExitPlanMode | Asks "Challenge or proceed?" unless the plan already records both verdicts; then reminds to build the native task list (TaskCreate) from the plan's Steps. |
 | `log-recommendation.sh` | PostToolUse AskUserQuestion | Appends each answer to `decision-log.jsonl` outside the repo. |
 | `precompact-snapshot.sh` | PreCompact | Saves branch, dirty files, plan and transcript paths. |
 | `compact-resume.sh` | SessionStart (compact only) | Re-injects that snapshot after a compaction. |

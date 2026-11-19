@@ -21,6 +21,26 @@
     {"id": "article-short-heard-full", "expected": "града", "heard": "градът", "mark": "correct", "note": "Equivalence is symmetric."},
     {"id": "article-ya", "expected": "конят", "heard": "коня", "mark": "correct", "note": "-ят / -я equivalence."},
     {"id": "article-short-stem-excluded", "expected": "път", "heard": "па", "mark": "misread", "note": "Stem shorter than 3 letters: път is not an article form."},
-    {"id": "article-wrong-stem", "expected": "градът", "heard": "брада", "mark": "misread", "note": "Equivalence needs the same stem."}
+    {"id": "article-wrong-stem", "expected": "градът", "heard": "брада", "mark": "misread", "note": "Equivalence needs the same stem."},
+    {"id": "reduction-o-u-four-letters", "expected": "коза", "heard": "куза", "mark": "correct", "note": "Invented. Rule 17: unstressed о heard as у; applies before the 4-letter gate."},
+    {"id": "reduction-o-u-voda", "expected": "вода", "heard": "вуда", "mark": "correct", "note": "Invented. Rule 17."},
+    {"id": "reduction-a-schwa-final", "expected": "мама", "heard": "мамъ", "mark": "correct", "note": "Invented. Rule 17: unstressed final а heard as ъ."},
+    {"id": "reduction-a-schwa-stress-unknown", "expected": "мама", "heard": "мъма", "mark": "correct", "note": "Invented. Rule 17: without a stress dictionary either а may be the reduced one; accepted."},
+    {"id": "reduction-schwa-a", "expected": "градът", "heard": "градат", "mark": "correct", "note": "Invented. Rule 17, direction ъ to а."},
+    {"id": "reduction-article-a-schwa", "expected": "града", "heard": "градъ", "mark": "correct", "note": "Invented. Rule 17 on a short-article form."},
+    {"id": "reduction-u-o-reverse", "expected": "училище", "heard": "очилище", "mark": "correct", "note": "Invented. Rule 17, direction у to о (unstressed у)."},
+    {"id": "reduction-two-in-long-word", "expected": "голяма", "heard": "гулямъ", "mark": "correct", "note": "Invented. Rule 17: 3 vowels, 2 substitutions <= vowels - 1."},
+    {"id": "reduction-every-vowel-rejected", "expected": "коза", "heard": "кузъ", "mark": "misread", "note": "Invented. Rule 17: 2 substitutions in a 2-vowel word would reduce the stressed vowel too."},
+    {"id": "reduction-plus-consonant", "expected": "коза", "heard": "куса", "mark": "misread", "note": "Invented. Rule 17 covers only vowel pairs; the з/с change makes it a misread (4 letters)."},
+    {"id": "reduction-not-e-i", "expected": "пее", "heard": "пие", "mark": "misread", "note": "Invented. е/и is not reduced in the standard language; пее/пие is a real minimal pair (fixture f04)."},
+    {"id": "reduction-one-vowel-luk", "expected": "лук", "heard": "лок", "mark": "misread", "note": "Invented. One-vowel word: its vowel is stressed, so the rule never applies."},
+    {"id": "reduction-one-vowel-pak", "expected": "пак", "heard": "пък", "mark": "misread", "note": "Invented. Real minimal pair; one vowel."},
+    {"id": "reduction-one-vowel-sam", "expected": "съм", "heard": "сам", "mark": "misread", "note": "Invented. Real minimal pair; one vowel."},
+    {"id": "reduction-one-vowel-bak", "expected": "бак", "heard": "бък", "mark": "misread", "note": "Invented. One vowel."},
+    {"id": "reduction-one-vowel-clitic", "expected": "на", "heard": "нъ", "mark": "misread", "note": "Invented. Clitics are unstressed in speech but have one vowel; accepted limit."},
+    {"id": "reduction-hides-doma-duma", "known_limit": true, "expected": "дома", "heard": "дума", "mark": "misread", "note": "Invented. KNOWN LIMIT of rule 17: дума is a real word, so a real misread is marked correct. Fixable later with a short twin list."},
+    {"id": "reduction-hides-kola-kula", "known_limit": true, "expected": "кола", "heard": "кула", "mark": "misread", "note": "Invented. KNOWN LIMIT of rule 17 (car / tower)."},
+    {"id": "reduction-hides-raka-ruka", "known_limit": true, "expected": "ръка", "heard": "рака", "mark": "misread", "note": "Invented. KNOWN LIMIT of rule 17 (hand / the crab)."},
+    {"id": "reduction-hides-maka-mika", "known_limit": true, "expected": "мъка", "heard": "мака", "mark": "misread", "note": "Invented. KNOWN LIMIT of rule 17 (sorrow / the poppy)."}
   ]
 }

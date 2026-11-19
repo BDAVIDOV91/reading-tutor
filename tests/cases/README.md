@@ -61,16 +61,57 @@ The specialist's own gap rules, accepted as starting values:
     `phrase-repeat-near-twin-of-previous-word`. Core version 0.2.0.
 15. When a text word is followed by a stand-alone `и` (from `ѝ` or `и`), a heard token equal to that word + `и`
     is split into the two (`брати` → `брат и`). Whisper turbo wrote `брат ѝ` as `брати` in 3 of 4 t5 adult
-    fixtures. Owner 2026-11-18; cases `glued-short-i-*`. Core version 0.3.0.
+    fixtures. Owner 2026-11-18; cases `glued-short-i-*`. Core version 0.3.0. **Superseded by rule 18** (its cases
+    stay and pass through rule 18's exact glue).
+
+Owner decisions 2026-11-19 (core version 0.4.0; specialist cases, then 2 challengers, then owner re-approval;
+all constants untuned):
+
+16. **Stray far match after a stop.** After the anchor pass, find the last jump: more than `STRAY_JUMP` (5) text
+    words between two anchors, the start of the text counting as an anchor. When the anchors after that jump
+    cover at most `STRAY_MAX_WORDS` (2) text words and not the text's last word, they are dropped and their heard
+    tokens go back to the tail gap. Repeated until nothing changes. It counts anchored text words, not heard
+    tokens, so a trailing engine phrase or a syllable split does not change the result. Errs toward
+    `not_attempted` (harmless) over `skipped` (shames the child). Cases `stray-*`, `real-skip-ending-on-last-word`,
+    `early-stop-two-fillers`. Two companions: (a) **tail join floor**: after the last anchor, joined fragments
+    (2 or more) match a word only with similarity ≥ 0.5, so fillers after a stop are insertions; (b) **token
+    coverage**: when two anchor choices match the same number of text words, the one covering more heard tokens
+    wins (`то пла та` anchors `топлата`, not `то`).
+17. **Vowel reduction.** In `judge()` only (after `equivalent`, before the 4-letter gate; anchors, repeats and
+    rule 14 stay strict): `heard` is `correct` when it has the text word's length, the text word has ≥ 2 vowel
+    letters (а е и о у ъ ю я), every differing position (compared letter by letter) is an о/у or а/ъ pair in
+    either direction, and 1 to (vowels − 1) positions differ. ю and я count as vowels but are never a covered
+    position. е/и and я/е are left out (`пие`/`пее` stays a misread). Sources: Sabev et al., Interspeech 2023
+    (о/у); Andreeva et al. 2013 (а/ъ, debated). Cases `reduction-*`. `WordMark.via` = `"reduction"`.
+18. **Glued words** (takes over rule 15). **Exact glue** (anchor pass): one heard token, or up to 5 joined
+    fragments, of ≥ `GLUE_MIN_LEN` (3) letters anchors two consecutive text words when it splits into two parts
+    each `equivalent` to its word (`милапее`, `слонае`, `вкъщи`), or is the two words with a shared consonant
+    merged (`братича`). On a tie, separate anchors win; a heard word that is one text word (`затова`) is never
+    split. **Near glue** (gap DP): one heard token covers two gap words when a prefix or suffix of ≥
+    `GLUE_MIN_EXACT` (3) letters is `equivalent` to one word and the rest has similarity ≥ 0.5 to the other. The
+    exact part is correct. The rest is `unsure` when it is one dropped or added letter away (Levenshtein 1,
+    length ± 1), an explicit exception to the ≤ 4-letter rule (engine artefact; ADR 0001 note); otherwise the
+    normal `judge()` applies (rule 17 included). Each word gets its own part as `heard`. At most 2 words. Cases
+    `glued-*`, `separate-short-drop-stays-misread`. `WordMark.via` = `"glue"`.
+
+`WordMark.via` is core-only and never written to the log (no schema change); the engine eval can re-run `align`
+and count how many marks rules 17 and 18 decided.
 
 ## Known limits (strict expected failures)
 
 A case with `"known_limit": true` runs as `xfail(strict=True)`: it documents a limit the owner chose to fix later,
 and an accidental fix turns it red (XPASS) so the flag is removed on purpose.
 
-- `stray-far-match-after-stop` (fixture f06, owner 2026-11-18: fix in a dedicated aligner step): a stray heard
-  word after the reader stopped matches a text word far ahead, so the words between become `skipped` instead
-  of `not_attempted`.
+- `reduction-hides-*` (rule 17): real twins that differ only in a reduced vowel (`дома`/`дума`, `кола`/`кула`,
+  `ръка`/`рака`, `мъка`/`мака`) are marked correct. Fixable later with a short twin list.
+- `glued-three-words` (rule 18): a heard token gluing 3 words (`мамаибаба`) is not split.
+
+Known limits, accepted 2026-11-19 (no case fails on them):
+
+- Rule 16: a real skipped line followed by reading at most 2 words and stopping reads as an early stop
+  (`not_attempted`, not `skipped`). A deliberate trade (`stray-two-adjacent-text-words-far`).
+- Rule 17: stress is not checked, so a changed stressed vowel can be accepted (`мама`/`мъма` is correct, because
+  without stress it cannot be told apart from `мама`/`мамъ`).
 
 Known limits, accepted: unsure hides some real ending misreads (`лодка` → `лодки` = 0.80); `стоят` → `стоя` is
 treated as an article pair.

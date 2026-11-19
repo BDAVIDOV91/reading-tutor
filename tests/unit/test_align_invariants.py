@@ -49,3 +49,22 @@ def test_two_minute_read_aligns_quickly():
     marks = align(text, heard)
     assert len(marks) == 150
     assert time.perf_counter() - start < 3.0
+
+
+def test_glued_read_aligns_quickly():
+    """Rule 18 (2026-11-19): glue on every second word pair, some with a dropped letter, some split in syllables."""
+    rng = random.Random(11)
+    words = [t.norm for t in tokenise(_random_text(rng, 150), side="text")]
+    heard: list[str] = []
+    for i in range(0, len(words) - 1, 2):
+        glued = words[i] + words[i + 1]
+        if i % 6 == 2:
+            glued = glued[:-1]  # near glue: a dropped final letter
+        if i % 6 == 4 and len(glued) > 3:
+            heard += [glued[:2], glued[2:]]  # a syllable variant of the glued token
+        else:
+            heard.append(glued)
+    start = time.perf_counter()
+    marks = align(" ".join(words), " ".join(heard))
+    assert len(marks) == len(words)
+    assert time.perf_counter() - start < 3.0

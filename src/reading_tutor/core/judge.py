@@ -1,4 +1,4 @@
-"""Mark one final attempt at one text word (ADR 0001 unsure rule; tests/cases/README.md)."""
+"""Mark one final attempt at one text word (ADR 0001 unsure rule; rule 17 vowel reduction; tests/cases/README.md)."""
 
 from __future__ import annotations
 
@@ -40,6 +40,12 @@ DIGIT_WORDS: dict[str, frozenset[str]] = {
     }.items()
 }
 
+# Rule 17 (owner 2026-11-19): unstressed о is heard as у and а as ъ (and back). Sources: Sabev et al.,
+# Interspeech 2023 (о/у merge); Andreeva et al. 2013 (а/ъ, debated). е/и and я/е are left out: пие/пее is a
+# real minimal pair. There is no stress dictionary, so at least one vowel letter must stay unchanged.
+REDUCTION_PAIRS = frozenset({("о", "у"), ("у", "о"), ("а", "ъ"), ("ъ", "а")})
+VOWELS = frozenset("аеиоуъюя")  # ю and я count as vowels but are never a covered position
+
 # Full and short definite article sound the same; only the spelling differs (owner 2026-11-18).
 _ARTICLE_PAIRS = (("ът", "а"), ("ят", "я"))
 _MIN_STEM = 3
@@ -73,11 +79,29 @@ def equivalent(expected: str, heard: str) -> bool:
     return bool(_article_stem(expected) & _article_stem(heard))
 
 
-def judge(expected: str, heard: str) -> Mark:
+def _is_reduction(expected: str, heard: str) -> bool:
+    """Rule 17: same length, compared letter by letter (Hamming); every differing position is an о/у or а/ъ
+    pair; 1 to (vowel letters - 1) positions differ. Stress is not checked, so a changed stressed vowel can be
+    accepted (known limit, tests/cases/README.md)."""
+    if len(expected) != len(heard):
+        return False
+    vowels = sum(ch in VOWELS for ch in expected)
+    diffs = [(a, b) for a, b in zip(expected, heard, strict=True) if a != b]
+    return 1 <= len(diffs) <= vowels - 1 and all(d in REDUCTION_PAIRS for d in diffs)
+
+
+def judge_detail(expected: str, heard: str) -> tuple[Mark, str]:
+    """The mark and the rule that decided it ("reduction" or "")."""
     if equivalent(expected, heard):
-        return Mark.CORRECT
+        return Mark.CORRECT, ""
+    if _is_reduction(expected, heard):
+        return Mark.CORRECT, "reduction"
     if len(expected) <= SHORT_WORD_MAX:
-        return Mark.MISREAD
+        return Mark.MISREAD, ""
     if similarity(expected, heard) >= UNSURE_THRESHOLD - _EPS:
-        return Mark.UNSURE
-    return Mark.MISREAD
+        return Mark.UNSURE, ""
+    return Mark.MISREAD, ""
+
+
+def judge(expected: str, heard: str) -> Mark:
+    return judge_detail(expected, heard)[0]

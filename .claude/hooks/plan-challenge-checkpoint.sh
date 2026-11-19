@@ -59,7 +59,8 @@ if path and already_challenged(path):
         "additionalContext": (
             "PLAN-CHALLENGE CHECKPOINT: plan already challenged (both verdicts recorded under "
             "'## Challenger Findings' in " + path + "). Do not ask Challenge/Proceed again; proceed. "
-            "If the plan changed materially since those verdicts, say so and offer a re-challenge."
+            "If the plan changed materially since those verdicts, say so and offer a re-challenge. "
+            "Then build the native task list from the plan's Steps (TaskCreate) and keep it updated."
         )}}))
     raise SystemExit(0)
 where = path or (
@@ -77,7 +78,9 @@ msg = (
     "into the existing plan file: append a '## Challenger Findings (A: <VERDICT>, B: <VERDICT>)' section "
     "(that heading lets a later re-approval skip this question) and fold any accepted "
     "fixes inline where they apply (never overwrite/replace the original plan). Then proceed.\n"
-    "- If Proceed: implement directly, no challenge."
+    "- If Proceed: implement directly, no challenge.\n"
+    "Either way (Challenge after the merge, or Proceed): then build the native task list from the plan's "
+    "Steps (TaskCreate) and keep it updated."
 )
 print(json.dumps({"hookSpecificOutput": {
     "hookEventName": "PostToolUse",

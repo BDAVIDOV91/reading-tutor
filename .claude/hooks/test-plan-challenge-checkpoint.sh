@@ -79,6 +79,15 @@ has 'Challenge the plan or proceed' && ok "no path: still asks" || bad "no path 
 run "$(payload ExitPlanMode "" /x/plans/foo-bar.md)"
 has '(A: <VERDICT>, B: <VERDICT>)' && ok "asks for the verdict-bearing heading" || bad "heading format not requested"
 
+echo "task list (2026-11-19: after approval, build the native task list from the plan's Steps):"
+run "$(payload ExitPlanMode "" /x/plans/foo-bar.md)"
+has 'native task list' && has 'TaskCreate' && ok "ask branch: names the native task list (TaskCreate)" || bad "ask branch: no task-list reminder"
+run "$(payload ExitPlanMode "" "$P/both.md")"
+has 'native task list' && has 'TaskCreate' && ok "already-challenged branch: names the native task list" || bad "already-challenged branch: no task-list reminder"
+printf '# plan\n\n## Decisions 2026-11-19 (cases)\n\n### Challenger findings (decisions 2026-11-19): A revise, B revise\n\n- x\n\n## Steps\n' > "$P/sub.md"
+run "$(payload ExitPlanMode "" "$P/sub.md")"
+has 'Challenge the plan or proceed' && ok "mid-session '### Challenger findings' subsection still asks" || bad "subsection skipped the plan question"
+
 echo "quiet on everything else:"
 for p in "$(payload Bash "" /x/p.md)" "$(payload AskUserQuestion "" "")" 'not json{' ''; do
   run "$p"

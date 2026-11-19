@@ -29,6 +29,12 @@ can be swapped. A digit heard for a number word is compared through a small digi
 
 Repeats and insertions are not errors. Self-correction: the last attempt at a word wins.
 
+**Note (core 0.4.0, owner 2026-11-19).** Two exceptions to the unsure rule, both defined in
+`tests/cases/README.md`: rule 17 marks an unstressed-vowel reduction (о/у, а/ъ) `correct`, also on short words;
+rule 18 marks the inexact part of a glued heard word `unsure` when it is one dropped or added letter away from
+its word ("милапе" for "Мила пее": пее unsure "пе"), even on a word of 4 letters or fewer. Glueing is an engine
+artefact, so the short-word rule does not apply there. The log schema is unchanged.
+
 ## Fields
 
 **Attempt** (one per reading):

@@ -11,11 +11,18 @@ and scores it. The prototype answers one question: can speech recognition follow
 
 1. **Plan mode** for anything beyond a one-line change.
 2. **`grilling`** (or `grill-with-docs` when terms or one-way decisions come up) until the design tree is settled.
+   A grilling round outside plan mode (e.g. the owner approves specialist cases) is challenged too: append its
+   decisions to the plan file under `## Decisions YYYY-MM-DD (<topic>)`, spawn 2 `challenger` agents on that
+   section, merge their findings under it as `### Challenger findings (decisions …)`, and only then write the
+   tests that depend on it.
 3. **Challenge:** after plan approval a hook asks "Challenge or proceed?". On Challenge, spawn 2 `challenger`
    agents in parallel with the plan path, then merge their findings into the plan.
-4. **Build test-first** (superpowers `test-driven-development`). Keep core logic (normalise, align, score) free of
+4. **Track:** after plan approval (and after a challenge merge), build a native task list (TaskCreate) from the
+   plan's Steps. Mark each task `in_progress` / `completed` as it happens; add a task for new work found
+   mid-session. The task list is the live status; the plan stays the spec.
+5. **Build test-first** (superpowers `test-driven-development`). Keep core logic (normalise, align, score) free of
    UI and browser code so the later native app can reuse it.
-5. **Before the checkpoint**, run the `privacy-reviewer` agent when the diff touches audio, storage, STT clients,
+6. **Before the checkpoint**, run the `privacy-reviewer` agent when the diff touches audio, storage, STT clients,
    logging or the server.
 
 Repo skills: `add-stt-engine`, `engine-eval`, `reading-fixtures`, `run-tests` (test layers and the gate),

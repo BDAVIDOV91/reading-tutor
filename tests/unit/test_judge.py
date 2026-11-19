@@ -19,3 +19,11 @@ def test_similarity_is_rapidfuzz_normalized_levenshtein():
     assert similarity("котка", "кошка") == pytest.approx(0.8)
     assert similarity("рисува", "пише") == pytest.approx(1 - 5 / 6)
     assert similarity("", "") == 1.0
+
+
+def test_judge_detail_names_the_reduction_rule():
+    from reading_tutor.core.judge import Mark, judge_detail
+
+    assert judge_detail("коза", "куза") == (Mark.CORRECT, "reduction")
+    assert judge_detail("коза", "коза") == (Mark.CORRECT, "")
+    assert judge_detail("коза", "кузъ") == (Mark.MISREAD, "")
