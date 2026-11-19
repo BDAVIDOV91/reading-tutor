@@ -1,0 +1,73 @@
+{
+ "id": "f10-t1-reduction",
+ "text_id": "t1-mila-pee",
+ "kind": "reduction",
+ "speaker": "adult",
+ "recorded_by": "owner",
+ "device": "laptop built-in microphone (ffmpeg -f pulse, input 16 %)",
+ "audio": "audio-local/f10-t1-reduction.wav",
+ "instructions": "Read the whole text once, fluently, at a natural adult pace with natural unstressed vowels (do not exaggerate, do not over-articulate). Tests rule 17 (vowel reduction о≈у, а≈ъ): does turbo write reduced forms such as 'вуда' or 'куза'? Record 15 s (10 s cut off the last two words).",
+ "planned": [
+  "natural unstressed vowel reduction, not exaggerated",
+  "all 11 words read correctly"
+ ],
+ "read_aloud": "Ето мама и баба.\nМила пее.\nТото пие вода.\nКоза пасе.",
+ "reference_transcript": "ето мамъ и бабъ милъ пее тото пие вуда куза пасе",
+ "expected_marks": [
+  {
+   "word": "ето",
+   "mark": "correct",
+   "heard": "ето"
+  },
+  {
+   "word": "мама",
+   "mark": "correct",
+   "heard": "мамъ"
+  },
+  {
+   "word": "и",
+   "mark": "correct",
+   "heard": "и"
+  },
+  {
+   "word": "баба",
+   "mark": "correct",
+   "heard": "бабъ"
+  },
+  {
+   "word": "мила",
+   "mark": "correct",
+   "heard": "милъ"
+  },
+  {
+   "word": "пее",
+   "mark": "correct",
+   "heard": "пее"
+  },
+  {
+   "word": "тото",
+   "mark": "correct",
+   "heard": "тото"
+  },
+  {
+   "word": "пие",
+   "mark": "correct",
+   "heard": "пие"
+  },
+  {
+   "word": "вода",
+   "mark": "correct",
+   "heard": "вуда"
+  },
+  {
+   "word": "коза",
+   "mark": "correct",
+   "heard": "куза"
+  },
+  {
+   "word": "пасе",
+   "mark": "correct",
+   "heard": "пасе"
+  }
+ ]
+}

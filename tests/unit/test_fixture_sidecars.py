@@ -20,7 +20,7 @@ FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"
 SIDECARS = sorted((FIXTURES / "sidecars").glob("*.json"))
 MANIFEST = FIXTURES / "FIXTURES.md"
 FIRST_SET_KINDS = {"clean", "syllables", "misreads_skip", "repeats_selfcorrection"}
-KINDS = FIRST_SET_KINDS | {"misreads"}
+KINDS = FIRST_SET_KINDS | {"misreads", "early_stop", "reduction"}
 FIELDS = {
     "id", "text_id", "kind", "speaker", "recorded_by", "device", "audio", "instructions", "planned",
     "reference_transcript", "expected_marks",

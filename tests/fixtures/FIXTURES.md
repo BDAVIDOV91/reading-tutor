@@ -25,5 +25,7 @@ bash scripts/record-fixture.sh <id> [seconds]   # shows the text in a window; cl
 | `audio-local/f07-t5-misreads-skip.wav` | t5-patitsite-v-parka | 2 misreads + 1 skip, stops after word 24 | owner | adult |
 | `audio-local/f08-t5-repeats-selfcorr.wav` | t5-patitsite-v-parka | repeats + self-correction, stops after word 17 | owner | adult |
 | `audio-local/f09-t1-browser-repro.wav` | t1-mila-pee | 2 misreads (бама, вие): repeat of the first laptop-browser check | owner | adult |
+| `audio-local/f10-t1-reduction.wav` | t1-mila-pee | natural vowel reduction (rule 17), all correct | owner | adult |
+| `audio-local/f11-t5-stop-silence.wav` | t5-patitsite-v-parka | stops after word 14, then ~5 s silence (rule 16 vs trailing hallucinations) | owner | adult |
 
 The full set of 30 clips comes before any engine verdict (step 2 plan S6).
