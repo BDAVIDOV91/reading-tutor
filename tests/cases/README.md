@@ -93,6 +93,14 @@ all constants untuned):
     length ± 1), an explicit exception to the ≤ 4-letter rule (engine artefact; ADR 0001 note); otherwise the
     normal `judge()` applies (rule 17 included). Each word gets its own part as `heard`. At most 2 words. Cases
     `glued-*`, `separate-short-drop-stays-misread`. `WordMark.via` = `"glue"`.
+19. **Tail echo is a misread** (owner 2026-11-19, fixture f10). After the last anchor, a heard token that exactly
+    matches an earlier text word `r` is not a repeat of `r` (so not a free stop) when all hold: (a) `r` is not
+    the word just read; (b) the previous heard token does not match `r − 1` (no phrase reread); (b') the next
+    heard token does not match `r + 1` (no older phrase reread); (c) similarity to the word being placed ≥ 0.5,
+    all word lengths (`да` for `на` is a misread; accepted risk: a parent's "да" after the child stops); (e) `r`
+    was an exact anchor (otherwise the echo is a late self-correction; last attempt wins). The echo need not be
+    the last heard token. Then the misread option wins and `judge()` decides the mark. Mid-text gaps are
+    unchanged (a skip already costs 1). Core version 0.5.0. Cases `rule19-*`.
 
 `WordMark.via` is core-only and never written to the log (no schema change); the engine eval can re-run `align`
 and count how many marks rules 17 and 18 decided.

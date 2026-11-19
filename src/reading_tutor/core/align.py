@@ -12,7 +12,9 @@ Two passes (rules: tests/cases/README.md, owner-approved 2026-11-18 and 2026-11-
    costs 1 - similarity; a skipped text word costs 1 (a skipped line costs the words skipped); an insertion
    (filler, extra word) costs 0.6; a re-attempt of the word just read, or an exact repeat of a recently read word,
    costs 0.1; one heard token with an exact part may cover two words (near glue, rule 18). After the last anchor,
-   stopping is free (the remaining words are not attempted) and joined fragments need similarity >= 0.5.
+   stopping is free (the remaining words are not attempted) and joined fragments need similarity >= 0.5. There,
+   an exact echo of an earlier anchored word that is close to the next text word is a misread of that word, not
+   a repeat followed by a stop (rule 19, guards in `_rule19_echo`).
 
 Every attempt becomes an event (heard position, text word, heard form); the last event per word is judged.
 """
@@ -191,6 +193,19 @@ def _drop_stray_tail(anchors: list[_Anchor], n_text: int) -> list[_Anchor]:
     return out
 
 
+def _rule19_echo(t: list[str], h: list[str], x: int, r: int, g: int, anchored: frozenset[int]) -> bool:
+    """Rule 19 (owner 2026-11-19, fixture f10): in the tail gap, heard token h[x] exactly matches earlier text
+    word r while text word g is being placed. True when it is a misread of g, not a repeat of r:
+    (a) r is not the word just read, (b) h[x - 1] does not continue a phrase reread ending at r, (b') h[x + 1]
+    does not start an older phrase reread from r, (c) h[x] is close to g, (e) r was an exact anchor (otherwise
+    the echo is a late self-correction). A missing neighbour token never blocks."""
+    if r >= g - 1 or r not in anchored or _sim(t[g], h[x]) < REATTEMPT_MIN:
+        return False
+    if x > 0 and r > 0 and _eq(t[r - 1], h[x - 1]):
+        return False
+    return not (x + 1 < len(h) and r + 1 < len(t) and _eq(t[r + 1], h[x + 1]))
+
+
 def _gap(
     t: list[str],
     h: list[str],
@@ -199,6 +214,7 @@ def _gap(
     prev_word: int | None,
     next_word: int | None,
     tail: bool,
+    anchored: frozenset[int] = frozenset(),
 ) -> list[_Event]:
     """Place heard tokens `heard` against text words `words` between two anchors. Returns the attempt events."""
     k_n, x_n = len(words), len(heard)
@@ -245,7 +261,8 @@ def _gap(
                 g = words[k] if k < k_n else (next_word if next_word is not None else len(t))
                 for r in range(g - 1, max(-1, g - 1 - REPEAT_WINDOW), -1):
                     if _eq(t[r], tok):
-                        options.append((_REATTEMPT + cost[k][x + 1], 2, ("again", r)))
+                        if not (tail and k < k_n and _rule19_echo(t, h, heard[x], r, words[k], anchored)):
+                            options.append((_REATTEMPT + cost[k][x + 1], 2, ("again", r)))
                         break
                 options.append((_INSERT + cost[k][x + 1], 3, ("insert",)))
             if options:
@@ -292,6 +309,7 @@ def align(text: str, heard: str) -> list[WordMark]:
         for k, part in enumerate(a.parts)
     ]
 
+    anchored = frozenset(w for a in anchors for w in range(a.text_start, a.text_end + 1))
     start = _Anchor(-1, -1, 0, 0, ())
     end = _Anchor(len(t), len(t), len(h), len(h), ())
     bounds = [start, *anchors, end]
@@ -305,6 +323,7 @@ def align(text: str, heard: str) -> list[WordMark]:
             prev_word=a.text_end if a.text_end >= 0 else None,
             next_word=None if is_tail else b.text_start,
             tail=is_tail,
+            anchored=anchored,
         )
 
     last: dict[int, _Event] = {}
