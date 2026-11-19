@@ -9,9 +9,10 @@ from reading_tutor.core.normalise import Token, normalise_token, tokenise
 from reading_tutor.core.score import Score, score
 from reading_tutor.core.similarity import similarity
 
-CORE_VERSION = "0.5.0"  # 0.2.0: rule 14 (early attempt); 0.3.0: rule 15 (glued и), 2026-11-18
+CORE_VERSION = "0.6.0"  # 0.2.0: rule 14 (early attempt); 0.3.0: rule 15 (glued и), 2026-11-18
 # 0.4.0: rules 16 (stray far match), 17 (vowel reduction), 18 (glued words, replaces 15), 2026-11-19
 # 0.5.0: rule 19 (tail echo of an earlier word is a misread), 2026-11-19
+# 0.6.0: rule 19 (c) strict chain + an echo is not a retry ("вода куза пее", fixture f12), 2026-11-19
 
 __all__ = [
     "CORE_VERSION",

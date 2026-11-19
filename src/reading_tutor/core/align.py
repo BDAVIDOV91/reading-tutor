@@ -13,8 +13,10 @@ Two passes (rules: tests/cases/README.md, owner-approved 2026-11-18 and 2026-11-
    (filler, extra word) costs 0.6; a re-attempt of the word just read, or an exact repeat of a recently read word,
    costs 0.1; one heard token with an exact part may cover two words (near glue, rule 18). After the last anchor,
    stopping is free (the remaining words are not attempted) and joined fragments need similarity >= 0.5. There,
-   an exact echo of an earlier anchored word that is close to the next text word is a misread of that word, not
-   a repeat followed by a stop (rule 19, guards in `_rule19_echo`).
+   an exact echo of an earlier anchored word that is close to the next text word, or to a later one reached by a
+   chain of sloppy attempts ("вода куза пее": куза for коза, пее for пасе), is a misread of that word, not a
+   repeat followed by a stop; such an echo is not a re-attempt of the word before either (rule 19, guards in
+   `_rule19_echo`, chain in `_chain_ok`).
 
 Every attempt becomes an event (heard position, text word, heard form); the last event per word is judged.
 """
@@ -193,13 +195,38 @@ def _drop_stray_tail(anchors: list[_Anchor], n_text: int) -> list[_Anchor]:
     return out
 
 
-def _rule19_echo(t: list[str], h: list[str], x: int, r: int, g: int, anchored: frozenset[int]) -> bool:
-    """Rule 19 (owner 2026-11-19, fixture f10): in the tail gap, heard token h[x] exactly matches earlier text
-    word r while text word g is being placed. True when it is a misread of g, not a repeat of r:
+def _chain_ok(t: list[str], h: list[str], x: int, g: int, w: int, lo: int) -> bool:
+    """Rule 19 (c) chain for one tail word w >= g (core 0.6.0, fixture f12): h[x] is close to t[w], and each of the
+    d = w - g heard tokens just before h[x] (all at index >= lo, inside this gap) is close to the matching text word
+    before w and strictly closer to it than to the word before that. The strict part keeps a token that is really
+    an attempt at the earlier word ("воа" for вода, also 0.5 to коза) from carrying the chain."""
+    d = w - g
+    if x - d < lo or _sim(t[w], h[x]) < REATTEMPT_MIN:
+        return False
+    for i in range(d):
+        tok = h[x - 1 - i]
+        own = _sim(t[w - 1 - i], tok)
+        if own < REATTEMPT_MIN or (w - 2 - i >= 0 and own <= _sim(t[w - 2 - i], tok)):
+            return False
+    return True
+
+
+def _chain_close(t: list[str], h: list[str], x: int, g: int, lo: int, min_d: int = 0) -> bool:
+    """True when some tail word w >= g + min_d passes `_chain_ok`. With w = g (d = 0) this is "h[x] is close to g"."""
+    return any(_chain_ok(t, h, x, g, w, lo) for w in range(g + min_d, len(t)))
+
+
+def _rule19_echo(
+    t: list[str], h: list[str], x: int, r: int, g: int, anchored: frozenset[int], lo: int = 0
+) -> bool:
+    """Rule 19 (owner 2026-11-19, fixtures f10, f12): in the tail gap (heard tokens from index lo), heard token
+    h[x] exactly matches earlier text word r while text word g is being placed. True when it is a misread of a tail
+    word, not a repeat of r:
     (a) r is not the word just read, (b) h[x - 1] does not continue a phrase reread ending at r, (b') h[x + 1]
-    does not start an older phrase reread from r, (c) h[x] is close to g, (e) r was an exact anchor (otherwise
-    the echo is a late self-correction). A missing neighbour token never blocks."""
-    if r >= g - 1 or r not in anchored or _sim(t[g], h[x]) < REATTEMPT_MIN:
+    does not start an older phrase reread from r, (c) h[x] is close to g, or to a later tail word w reached by a
+    chain of sloppy attempts at the words between (`_chain_ok`), (e) r was an exact anchor (otherwise the echo is
+    a late self-correction). A missing neighbour token never blocks."""
+    if r >= g - 1 or r not in anchored or not _chain_close(t, h, x, g, lo):
         return False
     if x > 0 and r > 0 and _eq(t[r - 1], h[x - 1]):
         return False
@@ -253,7 +280,20 @@ def _gap(
                 ahead = next_word is not None and any(
                     _eq(t[w], tok) for w in range(next_word, min(len(t), next_word + AHEAD_WINDOW))
                 )
-                if ahead:  # an exact early attempt at an upcoming word (a phrase repeat): never a re-attempt
+                # Rule 19, an echo is not a retry (core 0.6.0, narrow): an echo that opens the tail gap, or that a
+                # chain of at least one sloppy attempt backs, gets no `again` option, so it cannot turn into a
+                # cheap re-attempt of the word before (that marked a correctly read word misread).
+                echo = False
+                if tail and k < k_n:
+                    for r in range(words[k] - 1, max(-1, words[k] - 1 - REPEAT_WINDOW), -1):
+                        if _eq(t[r], tok):
+                            echo = _rule19_echo(t, h, heard[x], r, words[k], anchored, heard.start) and (
+                                heard[x] == heard.start or _chain_close(t, h, heard[x], words[k], heard.start, 1)
+                            )
+                            break
+                if echo:
+                    pass
+                elif ahead:  # an exact early attempt at an upcoming word (a phrase repeat): never a re-attempt
                     options.append((_REATTEMPT + cost[k][x + 1], 1, ("again", None)))
                 elif max(sim_prev, sim_next) >= REATTEMPT_MIN:
                     target = prev if sim_prev >= sim_next else None  # None: an earlier attempt at the next anchor
@@ -261,7 +301,7 @@ def _gap(
                 g = words[k] if k < k_n else (next_word if next_word is not None else len(t))
                 for r in range(g - 1, max(-1, g - 1 - REPEAT_WINDOW), -1):
                     if _eq(t[r], tok):
-                        if not (tail and k < k_n and _rule19_echo(t, h, heard[x], r, words[k], anchored)):
+                        if not (tail and k < k_n and _rule19_echo(t, h, heard[x], r, words[k], anchored, heard.start)):
                             options.append((_REATTEMPT + cost[k][x + 1], 2, ("again", r)))
                         break
                 options.append((_INSERT + cost[k][x + 1], 3, ("insert",)))

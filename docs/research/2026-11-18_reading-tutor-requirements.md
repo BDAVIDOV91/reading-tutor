@@ -242,6 +242,10 @@ The owner decides the gate as ADR 0003 before the first child recording (plan Q1
   device-verified.
 - **Also before child data:** adult deliberate-mistake fixtures exist (R12), and the CTC "literal engine"
   hypothesis is proven or dropped on them (finding 8).
+- **H2 gate (owner, 2026-11-19, aligner step 5 D2a):** before ADR 0003, any child session or any engine eval on
+  child audio, the cases `anchor-tie-steals-echo-mid-text` and `anchor-tie-steals-echo-tail` in
+  `tests/cases/align.json` pass with `known_limit` removed (H2: false `skipped` mid-text; lost credit / missed
+  misread at the tail). Fixed in aligner step 6. Pointer at `CHILD_FLAG` in `src/reading_tutor/settings.py`.
 - Certainty of the thresholds: ~65 % (reasoned, no Bulgarian data exists).
 
 ### Owner decision after the prototype passes, 2026-11-18
@@ -258,3 +262,20 @@ The owner decides the gate as ADR 0003 before the first child recording (plan Q1
   f10 (f14) did not repeat the echo. The transcript cannot tell a real misread from an engine echo, so aligner
   rule 19 may mark a correct "пасе" as misread. **Accepted for the prototype; t1 stays** (changing it would
   invalidate the t1 fixtures). Detail: `tests/cases/README.md` rule 19. Test-verified on an adult only.
+
+### Owner decision 2026-11-19 (aligner step 5, core 0.6.0)
+
+- **Rule 19 (c) chain with the strict condition ("v3t"), after three challenge rounds.** In the tail, an echo of
+  an earlier word may be a misread of a later word reached through sloppy attempts at the words between ("вода
+  куза пее": коза correct "куза", пасе misread "пее"; fixture f12). Each chain token must be closer to its own
+  word than to the word before it. An echo that the chain backs is not a re-attempt of the word before.
+- **Accepted risks (D4):** an echo two or more words ahead keeps the earlier word and leaves the rest
+  `not_attempted` (a teacher might mark skipped + misread); three misreads on a garbled transcript; a 4-letter
+  dropped vowel ("кза") is a misread; the 0.5-floor "да" risk reaches a word ahead only through the chain; a
+  stutter right after an exact word ("пее пе") stays a re-attempt (rule 6), so the word is misread "пе".
+- **Known limits with their steps:** step 6 H2 (the gate above), step 7 joined forms (H1, L1, L2), step 8 an
+  echo of an older word turned re-attempt (K1–K4, K6, K7, L3), step 9 the stutter prefix (owner 2026-11-19).
+  Ids in `tests/cases/README.md` "Known limits".
+- **Evidence:** test-verified on invented cases and a 200-input stored snapshot of 0.5.0 marks
+  (`tests/cases/align_golden.json`, 0 changed). f12 9 → 11 observed by re-aligning the stored adult turbo
+  transcript, not asserted by a test; not laptop- or device-verified.

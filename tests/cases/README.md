@@ -10,6 +10,7 @@ by the owner on 2026-11-18. Never add a real child's words here.
 | `judge.json` | `judge(expected, heard)`: the mark for one final attempt |
 | `align.json` | `align(text, heard)`: one mark per text word |
 | `score.json` | `score(marks, duration_s)` |
+| `align_golden.json` | `align`: a **generated snapshot of core 0.5.0 marks** on 200 invented tails, known-wrong marks included; not a definition of correct. Reviewed changes are listed in it (`tests/unit/test_align_golden.py`) |
 
 ## Rules the cases encode
 
@@ -104,8 +105,24 @@ all constants untuned):
     Accepted risk (owner 2026-11-19, fixtures f10/f12/f14): turbo wrote "пее" both for a spoken пасе (f10) and a
     spoken пее (f12), so a transcript cannot tell a real misread from an engine echo, and rule 19 may mark a
     correct t1 "пасе" as misread (at worst one false "try again"). The echo did not repeat in the f14 re-take.
-    t1 stays as it is. Known fault, aligner step 5: a rule-17 match just before the echo (`вода куза пее`)
-    leaves коза and пасе `not_attempted` (f12).
+    t1 stays as it is.
+    **(c) chain** (owner 2026-11-19, aligner step 5, core 0.6.0, fixture f12): the echo may instead be close to
+    a later tail word `w`, when each of the `w − g` heard tokens just before it, all inside the tail gap, is ≥ 0.5
+    to the matching text word before `w` and **strictly closer** to it than to the word before that one. So in
+    `вода куза пее`, куза is коза's attempt (rule 17, correct) and пее is пасе's misread. The strict part keeps a
+    token that is really an attempt at the earlier word (`пие воа пее`: воа is вода's, also 0.5 to коза) from
+    carrying the chain. **An echo is not a retry** (narrow): when the echo opens the tail gap, or a chain of at
+    least one sloppy attempt backs it, it gets no re-attempt option either (it made a correctly read пие misread
+    "пее" in `тото пие куза пее`). Otherwise re-attempts stand (`пие ъъъ пие`, `тото пие вода пие`). Cases
+    `rule19-chain-*`, `rule19-echo-is-not-a-retry`, `retry-*`.
+    Accepted risks (owner 2026-11-19, D4): an echo two or more words ahead keeps the earlier word and leaves the
+    rest `not_attempted` where a teacher might mark skipped + misread (`rule19-chain-echo-two-ahead-*`,
+    `-three-ahead-*`); a garbled transcript can give three misreads (`rule19-chain-two-guesses-then-echo`); a
+    4-letter dropped vowel is a misread (`кза`, exact rule); the 0.5-floor "да" risk reaches a word ahead only
+    through the chain (`rule19-chain-short-echo-at-floor`). A stutter after an exact word (`пее пе`) is a
+    re-attempt by rule 6, so the word is misread "пе" (`rule19-chain-survives-stutter`; teacher view in the known
+    limits). Open (D3): guard (e) leaves пасе `not_attempted` in `rule19-guard-e-late-self-correction-*`; the
+    specialist's teacher view (~60%) is a misread.
 
 `WordMark.via` is core-only and never written to the log (no schema change); the engine eval can re-run `align`
 and count how many marks rules 17 and 18 decided.
@@ -118,6 +135,20 @@ and an accidental fix turns it red (XPASS) so the flag is removed on purpose.
 - `reduction-hides-*` (rule 17): real twins that differ only in a reduced vowel (`дома`/`дума`, `кола`/`кула`,
   `ръка`/`рака`, `мъка`/`мака`) are marked correct. Fixable later with a short twin list.
 - `glued-three-words` (rule 18): a heard token gluing 3 words (`мамаибаба`) is not split.
+- Aligner step 5 (owner 2026-11-19, core 0.6.0), each with the step that fixes it; expected = teacher marks
+  (specialist-confirmed where the note gives a %):
+  - **Step 6 (H2, gate before ADR 0003 and any child session or engine eval on child audio):**
+    `anchor-tie-steals-echo-mid-text` (false `skipped`), `anchor-tie-steals-echo-tail` (lost credit / missed
+    misread).
+  - **Step 7 (joined forms, H1):** `tail-join-floor-swallows-short-word`, `messy-tail-stutter-and-split-echo`
+    (L1: a new `skipped` on a very messy tail), `messy-tail-glued-echo-misread` (L2).
+  - **Step 8 (an echo of an older word becomes a re-attempt):** `older-echo-after-last-word-is-not-a-retry`
+    (K1), `older-echo-after-word-is-not-a-retry` (K2), `rule19-chain-broken-by-filler` (K3),
+    `rule19-echo-of-word-just-read-after-sloppy-word` (K4), `older-echo-after-filler-is-not-a-retry` (K6),
+    `older-echo-mid-text-is-not-a-retry` (K7, mid-text, so step 8 is not closed on the tail alone),
+    `messy-tail-late-reduced-word-takes-credit` (L3, lost credit).
+  - **Step 9 (narrow rule 6):** `stutter-prefix-keeps-exact-word`: a strict prefix right after a word read
+    exactly is a stutter, and the word stays correct.
 
 Known limits, accepted 2026-11-19 (no case fails on them):
 

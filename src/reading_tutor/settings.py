@@ -15,6 +15,7 @@ MAX_RECORDING_S = 300  # the page stops recording automatically after 5 minutes 
 
 DATA_DIR_ENV = "READING_TUTOR_DATA_DIR"
 CHILD_FLAG = "READING_TUTOR_CHILD_RECORDING"  # ADR 0003 turns this on; until then only adults are recorded
+# Gate before ADR 0003 (owner 2026-11-19): H2 known limits pass first, see requirements doc "Go / no-go proposal".
 ENGINE_ENV = "READING_TUTOR_ENGINE"
 FAKE_FLAG = "READING_TUTOR_FAKE_ENGINE"
 
